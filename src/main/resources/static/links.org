@@ -1,0 +1,11 @@
+** video
+https://github.com/saravanastar/video-streaming
+https://melgenek.github.io/spring-video-service (kotlin)
+https://stackoverflow.com/questions/48201031/restful-based-video-streaming
+https://stackoverflow.com/questions/54569561/how-to-stream-audio-with-spring-boot
+
+** thymeleaf
+*** login navbar template
+https://www.thymeleaf.org/doc/articles/layouts.html
+*** fragments
+https://frontbackend.com/thymeleaf/how-to-work-with-fragments-in-thymeleaf

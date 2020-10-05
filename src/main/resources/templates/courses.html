@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Courses</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <th:block th:insert="~{fragments/tmpl :: link}"></th:block>
+          
+    </head>
+    <body>
+        <th:block th:insert="~{fragments/tmpl :: navigation}"></th:block>
+                <div class="card" th:each="course : ${courses}" style="margin-bottom: 1rem">
+                    <h5 class="card-header" th:text="${course.title}"></h5>
+                    <div class="card-body">
+                       
+                        <a th:href="@{/course/{id}(id = ${course.id})}" class="btn btn-success float-right">Byrja</a>
+                        <p th:text="${course.description}" class="card-text"></p>
+
+
+                        <p>
+                            <button class="btn btn-info btn-sm" type="button" data-toggle="collapse" th:attr="data-target='#collapse'+${course.id}" >
+                               Sýna kafla 
+                            </button>                        </p>
+                        <div class="collapse" th:id="'collapse'+${course.id}">
+                            <ul th:block th:each="lesson : ${course.lessons}" class="list-group list-group-flush" >
+                                <li th:text="${lesson.title}" class="list-group-item"></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+                <th:block th:insert="~{fragments/tmpl :: body/script}"></th:block>
+    </body>
+</html>

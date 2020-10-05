@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Courses</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <th:block th:insert="~{fragments/tmpl :: link}"></th:block>
+
+    </head>
+    <body>
+        <th:block th:insert="~{fragments/tmpl :: navigation}"></th:block>
+        <div class="card" th:each="course : ${course}" style="margin-bottom: 1rem">
+            <h5 class="card-header" th:text="${course.title}"></h5>
+            <div class="card-body">
+
+                <ul class="list-group" th:block th:each="lesson : ${course.lessons}">
+
+                                        <li  class="list-group-item d-flex justify-content-between"><p th:text="${lesson.title}"class="p-0 m-0 flex-grow-1">First item</p>
+                                            <button class="btn btn-info btn-sm" type="button" data-toggle="collapse" th:attr="data-target='#collapse'+${lesson.id}" >Horfa</button> </li>
+                                        <div class="collapse" th:id="'collapse'+${lesson.id}">
+                                            <span th:text="${lesson.text}" ></span>
+                                            <span th:text="${lesson.filename}" ></span>
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                                <!-- er ekki alveg búinn að finna út hvernig er best að gera þetta -->
+                                                <video class="embed-responsive-item" src="https://notendur.hi.is/sthb13/hbv501g/1.1_Hvad_er_spaldtolva.mp4" allowfullscreen controls></video>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="postingComments">Spurt og svarað</label>
+                                                <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="Skrifaðu athugasemd eða spruningu"></textarea>
+                                                <a class="btn btn-success btn-sm" href="#" role="button">Senda</a>
+                                            </div>
+                                        </div>
+        </th:block>
+                </ul>
+            </div>
+        </div>
+
+            <th:block th:insert="~{fragments/tmpl :: body/script}"></th:block>
+    </body>
+</html>
