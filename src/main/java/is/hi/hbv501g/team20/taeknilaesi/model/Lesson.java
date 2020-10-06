@@ -4,7 +4,6 @@ import javax.persistence.*;
 
 import lombok.Data;
 
-import static is.hi.hbv501g.team20.taeknilaesi.constants.ApplicationConstants.*;
 
 @Entity
 @Table
@@ -29,6 +28,7 @@ public class Lesson {
     private String title;
 
     @Column
+    @Lob
     private String text;
 
     @Column
@@ -41,7 +41,7 @@ public class Lesson {
         this.courseId = courseId;
         this.title = title;
         this.text = text;
-        this.filename = VIDEO_STORE + filename;
+        this.filename = filename;
     }
 
     public int getId() {

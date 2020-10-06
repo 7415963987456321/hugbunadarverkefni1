@@ -25,6 +25,7 @@ public class Course {
     private String title;
 
     @Column
+    @Lob
     private String description;
 
     public Course(){}

@@ -10,7 +10,7 @@ public class ApplicationConstants {
     public static final String ACCEPT_RANGES = "Accept-Ranges";
     public static final String BYTES = "bytes";
     public static final int BYTE_RANGE = 1024;
-    public static final String VIDEO_STORE = "https://notendur.hi.is/sthb13/hbv501g/";
+    public static final String VIDEO_STORE = "notendur.hi.is/sthb13/hbv501g/";
 
     private ApplicationConstants() {
     }

@@ -18,10 +18,13 @@
                                             <button class="btn btn-info btn-sm" type="button" data-toggle="collapse" th:attr="data-target='#collapse'+${lesson.id}" >Horfa</button> </li>
                                         <div class="collapse" th:id="'collapse'+${lesson.id}">
                                             <span th:text="${lesson.text}" ></span>
-                                            <span th:text="${lesson.filename}" ></span>
+                                            <!-- <span th:text="${lesson.filename}" ></span> -->
+
+                                            <!-- <span th:text="${url + lesson.filename}" ></span> -->
                                             <div class="embed-responsive embed-responsive-16by9">
-                                                <!-- er ekki alveg búinn að finna út hvernig er best að gera þetta -->
-                                                <video class="embed-responsive-item" src="https://notendur.hi.is/sthb13/hbv501g/1.1_Hvad_er_spaldtolva.mp4" allowfullscreen controls></video>
+
+                                                <video class="embed-responsive-item" th:src="|https://${url + lesson.filename}|" allowfullscreen controls></video>
+
                                             </div>
                                             <div class="form-group">
                                                 <label for="postingComments">Spurt og svarað</label>

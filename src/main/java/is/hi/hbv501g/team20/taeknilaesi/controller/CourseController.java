@@ -33,7 +33,7 @@ public class CourseController {
     // private String getAllCourse(Model model) {
     //     List<Course> coursesList = courseService.getAllCourse();
     //     model.addAttribute("courses", coursesList);
-    //     System.out.println(coursesList);
+    //     System.out.println(coursesList)
     //     return "courses";
     // }
 
@@ -42,6 +42,7 @@ public class CourseController {
     private String getCourse(@PathVariable("id") int id, Model model) {
         Course course = courseService.getCourseById(id);
         model.addAttribute("course",course);
+        model.addAttribute("url", VIDEO_STORE);
         return "course";
        // return courseService.getCourseById(id);
     }
