@@ -9,3 +9,18 @@ https://stackoverflow.com/questions/54569561/how-to-stream-audio-with-spring-boo
 https://www.thymeleaf.org/doc/articles/layouts.html
 *** fragments
 https://frontbackend.com/thymeleaf/how-to-work-with-fragments-in-thymeleaf
+** security
+https://stackoverflow.com/questions/47347037/spring-security-guest-user
+https://stackoverflow.com/questions/57275361/how-to-allow-guest-to-access-home-page-without-login-in-spring-security
+https://www.baeldung.com/spring-security-multiple-entry-points
+https://stackoverflow.com/questions/51129045/how-to-allow-anonymous-users-to-access-a-certain-function-only-using-spring-secu
+https://stackoverflow.com/questions/27649649/antmatchers-spring-security-pattern-with-changeable-url-user-id
+https://developer.okta.com/blog/2019/05/15/spring-boot-login-options
+https://stackoverflow.com/questions/233507/how-to-log-out-user-from-web-site-using-basic-authentication
+https://ducmanhphan.github.io/2019-02-22-Logout-in-Spring-Boot/
+
+* todo
+- authorization
+  - progress tracker
+  - comments
+  - quiz

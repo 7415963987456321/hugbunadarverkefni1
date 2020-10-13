@@ -18,16 +18,17 @@ import org.springframework.stereotype.Component;
 
 import is.hi.hbv501g.team20.taeknilaesi.model.Course;
 import is.hi.hbv501g.team20.taeknilaesi.model.Lesson;
-import is.hi.hbv501g.team20.taeknilaesi.model.Student;
+import is.hi.hbv501g.team20.taeknilaesi.model.User;
 import is.hi.hbv501g.team20.taeknilaesi.repository.CourseRepository;
 import is.hi.hbv501g.team20.taeknilaesi.repository.LessonRepository;
-import is.hi.hbv501g.team20.taeknilaesi.repository.StudentRepository;
+import is.hi.hbv501g.team20.taeknilaesi.repository.UserRepository;
+import is.hi.hbv501g.team20.taeknilaesi.spring.SecurityConfig;
 
 @SpringBootApplication
 public class TaeknilaesiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TaeknilaesiApplication.class, args);
+        SpringApplication.run(new Class[] { SecurityConfig.class, TaeknilaesiApplication.class }, args);
     }
 
     //er ekki notað en virkar vel
@@ -42,7 +43,7 @@ class DemoCommandLineRunner implements CommandLineRunner {
 
 
     @Autowired
-    private StudentRepository sr;
+    private UserRepository sr;
 
     @Autowired
     private CourseRepository cr;
@@ -54,8 +55,8 @@ class DemoCommandLineRunner implements CommandLineRunner {
     @Transactional
     public void run(String... args) throws Exception {
 
-        sr.save(new Student("unnur", 1935, "unnur@gmail.com"));
-        sr.save(new Student("jon", 1935, "jon@gmail.com"));
+        sr.save(new User("unnur", 1935, "unnur@gmail.com"));
+        sr.save(new User("jon", 1935, "jon@gmail.com"));
 
         Lesson l1 = new Lesson(1,"Hvað er spjaldtölva","Hvernig virkar spjaldtölva og hvernig stjórnar maður henni.","1.1_Hvad_er_spjaldtolva.mp4");
         lr.save(l1);
@@ -82,7 +83,7 @@ class DemoCommandLineRunner implements CommandLineRunner {
         tmpLessons.add(l1);
         tmpLessons.add(l2);
 
-        Course c1 = new Course(1,"Grunnatridi","Þetta námskeið fjallar um grunnotkun á spjaltölvu og utśkýrir mikilvæg hugtök sem þar koma fram.", tmpLessons);
+        Course c1 = new Course(1,"Grunnatriði","Þetta námskeið fjallar um grunnotkun á spjaltölvu og utśkýrir mikilvæg hugtök sem þar koma fram.", tmpLessons);
         cr.save(c1);
 
         tmpLessons.clear();
