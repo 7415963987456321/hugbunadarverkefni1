@@ -55,8 +55,8 @@ class DemoCommandLineRunner implements CommandLineRunner {
     @Transactional
     public void run(String... args) throws Exception {
 
-        sr.save(new User("unnur", 1935, "unnur@gmail.com"));
-        sr.save(new User("jon", 1935, "jon@gmail.com"));
+        sr.save(new User("unnur", 1935, "unnur@gmail.com","1234"));
+        sr.save(new User("jon", 1935, "jon@gmail.com","qwerty"));
 
         Lesson l1 = new Lesson(1,"Hvað er spjaldtölva","Hvernig virkar spjaldtölva og hvernig stjórnar maður henni.","1.1_Hvad_er_spjaldtolva.mp4");
         lr.save(l1);

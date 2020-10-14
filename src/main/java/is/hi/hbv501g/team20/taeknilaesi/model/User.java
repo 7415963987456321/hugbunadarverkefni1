@@ -22,13 +22,19 @@ public class User
     @Column
     private String email;
 
+    @Column
+    String password;
+
+    String passwordConfirmation;
+
     public User(){
         
     }
-    public User(String name,int year, String email){
+    public User(String name,int year, String email, String password){
         this.name = name;
         this.year = year;
         this.email = email;
+        this.password = password;
     }
     public long getId() {
         return id;
@@ -51,4 +57,16 @@ public class User
     public void setYear(int year) {
         this.year = year;
     }
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getPasswordConfirmation() {
+		return passwordConfirmation;
+	}
+	public void setPasswordConfirmation(String passwordConfirmation) {
+		this.passwordConfirmation = passwordConfirmation;
+	}
 }

@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -19,14 +20,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         super();
     }
 
-    //
+    //kjsdf
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception { 
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.
-            inMemoryAuthentication().passwordEncoder(passwordEncoder()).
-            withUser("user").password(passwordEncoder().encode("pass")).
-            roles("USER");
+               userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+            // inMemoryAuthentication().passwordEncoder(passwordEncoder()).
+            // withUser("user").password(passwordEncoder().encode("pass")).
+            // roles("USER");
     } // @formatter:on
 
     @Override
@@ -42,11 +46,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             loginProcessingUrl("/doLogin")
 
         .and()
+            // .logout().permitAll().logoutUrl("/logout").logoutSuccessUrl("/")
          .logout()
-                  .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))            
+                  .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                   .logoutSuccessUrl("/")
                   .invalidateHttpSession(true)        // set invalidation state when logout
-                  .deleteCookies("JSESSIONID")        
+                  .deleteCookies("JSESSIONID")
                   .and()
               .exceptionHandling()
                   .accessDeniedPage("/403");
