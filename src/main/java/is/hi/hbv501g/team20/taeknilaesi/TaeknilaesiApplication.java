@@ -1,5 +1,6 @@
 package is.hi.hbv501g.team20.taeknilaesi;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 
 import javax.transaction.Transactional;
@@ -8,12 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.content.commons.repository.Store;
-import org.springframework.content.fs.config.EnableFilesystemStores;
-import org.springframework.content.fs.io.FileSystemResourceLoader;
-import org.springframework.content.rest.StoreRestResource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import is.hi.hbv501g.team20.taeknilaesi.model.Course;
@@ -30,11 +26,6 @@ public class TaeknilaesiApplication {
     public static void main(String[] args) {
         SpringApplication.run(new Class[] { SecurityConfig.class, TaeknilaesiApplication.class }, args);
     }
-
-    //er ekki notað en virkar vel
-    @StoreRestResource(path = "videos")
-    public interface VideoStore extends Store<String> {
-    } 
 }
 
 
@@ -55,8 +46,11 @@ class DemoCommandLineRunner implements CommandLineRunner {
     @Transactional
     public void run(String... args) throws Exception {
 
-        sr.save(new User("unnur", 1935, "unnur@gmail.com","1234"));
-        sr.save(new User("jon", 1935, "jon@gmail.com","qwerty"));
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(10, new SecureRandom());
+        String encodedPassword1 = bCryptPasswordEncoder.encode("1234");
+        String encodedPassword2 = bCryptPasswordEncoder.encode("qwerty");
+        sr.save(new User("unnur", 1935, "unnur@gmail.com",encodedPassword1));
+        sr.save(new User("jon", 1935, "jon@gmail.com",encodedPassword2));
 
         Lesson l1 = new Lesson(1,"Hvað er spjaldtölva","Hvernig virkar spjaldtölva og hvernig stjórnar maður henni.","1.1_Hvad_er_spjaldtolva.mp4");
         lr.save(l1);

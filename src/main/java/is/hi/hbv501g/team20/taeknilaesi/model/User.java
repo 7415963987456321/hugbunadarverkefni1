@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table
@@ -23,12 +24,12 @@ public class User
     private String email;
 
     @Column
-    String password;
-
-    String passwordConfirmation;
+    private String password;
+    @Transient
+    private String passwordConfirmation;
 
     public User(){
-        
+
     }
     public User(String name,int year, String email, String password){
         this.name = name;
@@ -57,16 +58,16 @@ public class User
     public void setYear(int year) {
         this.year = year;
     }
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getPasswordConfirmation() {
-		return passwordConfirmation;
-	}
-	public void setPasswordConfirmation(String passwordConfirmation) {
-		this.passwordConfirmation = passwordConfirmation;
-	}
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    public String getPasswordConfirmation() {
+        return passwordConfirmation;
+    }
+    public void setPasswordConfirmation(String passwordConfirmation) {
+        this.passwordConfirmation = passwordConfirmation;
+    }
 }

@@ -20,22 +20,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         super();
     }
 
-    //kjsdf
     @Autowired
     private UserDetailsService userDetailsService;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.
-               userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-            // inMemoryAuthentication().passwordEncoder(passwordEncoder()).
-            // withUser("user").password(passwordEncoder().encode("pass")).
-            // roles("USER");
-    } // @formatter:on
+            userDetailsService(userDetailsService)
+             .passwordEncoder(passwordEncoder());
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception { // @formatter:off
-        http
+        http.csrf().disable() //h2
         .authorizeRequests()
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
@@ -55,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                   .and()
               .exceptionHandling()
                   .accessDeniedPage("/403");
-        ;
+        http.headers().frameOptions().disable(); //h2
     }
 
     @Bean

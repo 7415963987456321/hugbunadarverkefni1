@@ -1,17 +1,17 @@
 package is.hi.hbv501g.team20.taeknilaesi.model;
 
-import javax.persistence.*;
-
-import lombok.Data;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table
-@Data
 public class Course {
     @Id
     @Column

@@ -12,7 +12,7 @@
         <th:block th:insert="~{fragments/tmpl :: navigation}"></th:block>
         <div class="container">
             <h1>Stofna aðgang</h1>
-            <form id="userForm" th:action="@{/user/register}" th:object="${user}" action="#" method="post" class="form-horizontal">
+            <form id="userForm" th:action="@{/register}" th:object="${user}" action="#" method="post" class="form-horizontal">
                 <!-- <div th:if="${#fields.hasErrors('global')}" th:errors="*{global}" class="alert alert-danger">Incorrect password confirmation</div> -->
                 <input type="hidden" th:field="*{id}"/>
                 <!-- <input type="hidden" /> -->
@@ -20,13 +20,13 @@
                 <!-- <div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-error'"> -->
                 <label class="control-label col-xs-2" for="name">Nafn</label>
                 <div class="col-xs-10">
-                    <input id="name" type="name" title="name" th:field="*{name}"/>
+                    <input id="name" type="text" title="name" th:field="*{name}"/>
                     <!-- <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="help-block">Email Error</span> -->
                 </div>
 
                 <label class="control-label col-xs-2" for="year">Árgangur</label>
                 <div class="col-xs-10">
-                    <input id="year" type="year" title="year" th:field="*{year}"/>
+                    <input id="year" type="text" title="year" th:field="*{year}" placeholder="1935" />
                     <!-- <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="help-block">Email Error</span> -->
                 </div>
 

@@ -30,15 +30,16 @@
                         <a class="nav-link" href="/settings.html">Stillingar</a></li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/user.html" sec:authorize="isAuthenticated()">
-                        Velkomin <span sec:authentication="name"></span></a>
+                    <a class="nav-link" href="/user" sec:authorize="isAuthenticated()">
+                        Hæ <span sec:authentication="name"></span></a>
                 </li>
-                <a href="/logout" sec:authorize="isAuthenticated()" class="btn btn-success btn-sm " role="button" aria-pressed="true">Útkráning</a>
-                </ul>
+                <div sec:authorize="isAuthenticated()" >
+                    <a href="/logout" sec:authorize="isAuthenticated()" class="btn btn-success btn-sm " role="button" aria-pressed="true">Útskráning</a>
                 </div>
                 <div sec:authorize="!isAuthenticated()">
                     <a href="/login" class="btn btn-success btn-sm " role="button" aria-pressed="true">Innskráning</a>
                 </div>
+                </ul>
             </div>
         </nav>
     </div>
