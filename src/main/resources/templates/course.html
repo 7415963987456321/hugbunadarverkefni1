@@ -1,42 +1,34 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Course</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <th:block th:insert="~{fragments/tmpl :: link}"></th:block>
-
-    </head>
-    <body>
-        <th:block th:insert="~{fragments/tmpl :: navigation}"></th:block>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/tmpl}">
+<head>
+    <title>Course</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <div layout:fragment="content">
         <div class="card" th:each="course : ${course}" style="margin-bottom: 1rem">
             <h5 class="card-header" th:text="${course.title}"></h5>
             <div class="card-body">
-
                 <ul class="list-group" th:block th:each="lesson : ${course.lessons}">
-
-                                        <li  class="list-group-item d-flex justify-content-between"><p th:text="${lesson.title}"class="p-0 m-0 flex-grow-1">First item</p>
-                                            <button class="btn btn-info btn-sm" type="button" data-toggle="collapse" th:attr="data-target='#collapse'+${lesson.id}" >Horfa</button> </li>
-                                        <div class="collapse" th:id="'collapse'+${lesson.id}">
-                                            <span th:text="${lesson.text}" ></span>
-                                            <!-- <span th:text="${lesson.filename}" ></span> -->
-
-                                            <!-- <span th:text="${url + lesson.filename}" ></span> -->
-                                            <div class="embed-responsive embed-responsive-16by9">
-
-                                                <video class="embed-responsive-item" th:src="|https://${url + lesson.filename}|" allowfullscreen controls></video>
-
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="postingComments">Spurt og svarað</label>
-                                                <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="Skrifaðu athugasemd eða spruningu"></textarea>
-                                                <a class="btn btn-success btn-sm" href="#" role="button">Senda</a>
-                                            </div>
-                                        </div>
-        </th:block>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <p th:text="${lesson.title}" class="p-0 m-0 flex-grow-1">First item</p>
+                        <button class="btn btn-info btn-sm" type="button" data-toggle="collapse" th:attr="data-target='#collapse'+${lesson.id}">Horfa</button>
+                    </li>
+                    <div class="collapse" th:id="'collapse'+${lesson.id}">
+                        <span th:text="${lesson.text}"></span>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <video class="embed-responsive-item" th:src="|https://${url + lesson.filename}|" allowfullscreen controls></video>
+                        </div>
+                        <div class="form-group">
+                            <label for="postingComments">Spurt og svarað</label>
+                            <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="Skrifaðu athugasemd eða spruningu"></textarea>
+                            <a class="btn btn-success btn-sm" href="#" role="button">Senda</a>
+                        </div>
+                    </div>
+                    </th:block>
                 </ul>
             </div>
         </div>
-
-            <th:block th:insert="~{fragments/tmpl :: body/script}"></th:block>
-    </body>
+    </div>
+</body>
 </html>

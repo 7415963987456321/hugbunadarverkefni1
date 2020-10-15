@@ -1,44 +1,35 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org" >
-
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/tmpl}">
 <head>
     <title>Login Page</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <th:block th:insert="~{fragments/tmpl :: link}"></th:block>
-    
 </head>
 <body>
-    <th:block th:insert="~{fragments/tmpl :: navigation}"></th:block>
-<div class="container">
-    <h1>Innskráning</h1>
-
-    <div th:if="${param.error}" class="alert alert-danger">Rangt notendanafn.</div>
-    <div th:if="${param.logout}" class="alert alert-success">You have been logged out.</div>
-
-    <form th:action="@{/doLogin}" method="post" class="form-horizontal">
-        <div class="form-group">
-            <label class="control-label col-xs-2" for="username">Tölvupóstur:</label>
-
-            <div class="col-xs-10">
-                <input id="username" type="text" name="username"/>
-            </div>
+    <div layout:fragment="content">
+        <div class="container">
+            <h1>Innskráning</h1>
+            <div th:if="${param.error}" class="alert alert-danger">Rangt notendanafn.</div>
+            <div th:if="${param.logout}" class="alert alert-success">You have been logged out.</div>
+            <form th:action="@{/doLogin}" method="post" class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-xs-2" for="username">Tölvupóstur:</label>
+                    <div class="col-xs-10">
+                        <input id="username" type="text" name="username" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-2" for="password">Lykilorð: </label>
+                    <div class="col-xs-10">
+                        <input id="password" type="password" name="password" />
+                    </div>
+                </div>
+                <div class="form-actions col-xs-offset-2 col-xs-10">
+                    <input type="submit" class="btn btn-primary" value="Innskráning" />
+                </div>
+                <a class="btn btn-outline-primary" href="/signup">Búa til aðgang</a>
+                <!-- <a class="btn btn-outline-primary"  th:href="@{/signup}">Búa til aðgang</a> -->
+            </form>
         </div>
-        <div class="form-group">
-            <label class="control-label col-xs-2" for="password">Lykilorð: </label>
-
-            <div class="col-xs-10">
-                <input id="password" type="password" name="password"/>
-            </div>
-        </div>
-        <div class="form-actions col-xs-offset-2 col-xs-10">
-            <input type="submit" class="btn btn-primary" value="Innskráning"/>
-        </div>
-        <a class="btn btn-outline-primary"  href="/signup">Búa til aðgang</a>
-        <!-- <a class="btn btn-outline-primary"  th:href="@{/signup}">Búa til aðgang</a> -->
-
-    </form>
-</div>
-<th:block th:insert="~{fragments/tmpl :: body/script}"></th:block>
+    </div>
 </body>
 </html>

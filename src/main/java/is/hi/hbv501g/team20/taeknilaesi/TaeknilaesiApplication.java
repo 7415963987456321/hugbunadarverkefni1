@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,7 @@ import is.hi.hbv501g.team20.taeknilaesi.repository.CourseRepository;
 import is.hi.hbv501g.team20.taeknilaesi.repository.LessonRepository;
 import is.hi.hbv501g.team20.taeknilaesi.repository.UserRepository;
 import is.hi.hbv501g.team20.taeknilaesi.spring.SecurityConfig;
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 @SpringBootApplication
 public class TaeknilaesiApplication {
@@ -26,9 +28,12 @@ public class TaeknilaesiApplication {
     public static void main(String[] args) {
         SpringApplication.run(new Class[] { SecurityConfig.class, TaeknilaesiApplication.class }, args);
     }
+
+    @Bean
+    public LayoutDialect layoutDialect() {
+        return new LayoutDialect();
+    }
 }
-
-
 @Component
 class DemoCommandLineRunner implements CommandLineRunner {
 

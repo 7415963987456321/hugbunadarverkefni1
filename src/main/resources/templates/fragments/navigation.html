@@ -1,0 +1,30 @@
+<div th:fragment="navigation" xmlns:th="http://www.thymeleaf.org" > 
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #101f77; margin-top: 15px;margin-bottom:20px">
+            <a class="navbar-brand" href="/"><img src="/images/taeknilaesi-logo.png" style="position: absolute; z-index:1; top:0; margin-top:-5px" alt="Responsive image"> </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Tæknilæsi</a></li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/settings.html">Stillingar</a></li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/user" sec:authorize="isAuthenticated()">
+                        Hæ <span sec:authentication="name"></span></a>
+                </li>
+                <div sec:authorize="isAuthenticated()" >
+                    <a href="/logout" sec:authorize="isAuthenticated()" class="btn btn-success btn-sm " role="button" aria-pressed="true">Útskráning</a>
+                </div>
+                <div sec:authorize="!isAuthenticated()">
+                    <a href="/login" class="btn btn-success btn-sm " role="button" aria-pressed="true">Innskráning</a>
+                </div>
+                </ul>
+            </div>
+        </nav>
+    </div>

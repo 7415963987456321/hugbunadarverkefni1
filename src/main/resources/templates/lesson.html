@@ -1,18 +1,14 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Lessons</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <th:block th:insert="~{fragments/tmpl :: link}"></th:block>
-        
-    </head>
-    <body>
-        <th:block th:insert="~{fragments/tmpl :: navigation}"></th:block>
-            <span th:text="${lesson.title}">...</span>
-            <span th:text="${lesson.text}" ></span>
-            <span th:text="${lesson.filename}" ></span>
-
-
-            <th:block th:insert="~{fragments/tmpl :: body/script}"></th:block>
-    </body>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/tmpl}">
+<head>
+    <title>Lessons</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <div layout:fragment="content">
+        <span th:text="${lesson.title}">...</span>
+        <span th:text="${lesson.text}"></span>
+        <span th:text="${lesson.filename}"></span>
+    </div>
+</body>
 </html>
