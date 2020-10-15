@@ -1,5 +1,18 @@
 # Hugbúnaðarverkefni 1
 
+### Todo
+- [ ] Progress Tracker (Fannar)
+- [ ] Comments (Hrafnkell)
+- [ ] Quiz (Harpa)
+- [ ] Authentication (Skúli)
+  - [x] Signin
+  - [X] Registration
+  - [ ] Lost password
+  - [ ] Third party
+- [ ] Migration to postgres
+- [ ] Adding Content
+- [ ] HTML & CSS Cleanup
+
 ### Team Members
 | Name:  | Email  |
 |---|---|
