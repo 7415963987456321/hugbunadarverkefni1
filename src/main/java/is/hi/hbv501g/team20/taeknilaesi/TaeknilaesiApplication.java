@@ -2,9 +2,13 @@ package is.hi.hbv501g.team20.taeknilaesi;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
+import is.hi.hbv501g.team20.taeknilaesi.model.Progress;
+import is.hi.hbv501g.team20.taeknilaesi.repository.ProgressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -47,6 +51,10 @@ class DemoCommandLineRunner implements CommandLineRunner {
     @Autowired
     private LessonRepository lr;
 
+    @Autowired
+    private ProgressRepository pr;
+
+
     @Override
     @Transactional
     public void run(String... args) throws Exception {
@@ -54,8 +62,10 @@ class DemoCommandLineRunner implements CommandLineRunner {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(10, new SecureRandom());
         String encodedPassword1 = bCryptPasswordEncoder.encode("1234");
         String encodedPassword2 = bCryptPasswordEncoder.encode("qwerty");
-        sr.save(new User("unnur", 1935, "unnur@gmail.com",encodedPassword1));
-        sr.save(new User("jon", 1935, "jon@gmail.com",encodedPassword2));
+        User user1 = new User("unnur", 1935, "unnur@gmail.com",encodedPassword1);
+        User user2 = new User("jon", 1935, "jon@gmail.com",encodedPassword2);
+        sr.save(user1);
+        sr.save(user2);
 
         Lesson l1 = new Lesson(1,"Hvað er spjaldtölva","Hvernig virkar spjaldtölva og hvernig stjórnar maður henni.","1.1_Hvad_er_spjaldtolva.mp4");
         lr.save(l1);
@@ -94,6 +104,13 @@ class DemoCommandLineRunner implements CommandLineRunner {
 
         Course c2 = new Course(3, "Internetið", "Hér verður fjallað um internetið, hvað það er, hvernig það varð til og hvernig notar maður það.", tmpLessons);
         cr.save(c2);
+
+        Set<Lesson> tmp2Lessons = new HashSet<>();
+        tmp2Lessons.add(l3);
+        tmp2Lessons.add(l6);
+
+        Progress p = new Progress(l6,user2);
+        pr.save(p);
 
     }
 }

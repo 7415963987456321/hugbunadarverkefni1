@@ -1,12 +1,8 @@
 package is.hi.hbv501g.team20.taeknilaesi.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table
@@ -27,6 +23,10 @@ public class User
     private String password;
     @Transient
     private String passwordConfirmation;
+
+    @OneToMany(mappedBy = "user", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Progress> progress = new HashSet<>();
+
 
     public User(){
 

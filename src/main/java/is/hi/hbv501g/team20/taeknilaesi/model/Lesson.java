@@ -5,7 +5,10 @@ import javax.persistence.*;
 import lombok.Data;
 
 
-@Entity
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity(name="Lesson")
 @Table
 public class Lesson {
     @Id
@@ -33,6 +36,11 @@ public class Lesson {
 
     @Column
     private String filename;
+
+    @OneToMany(mappedBy="lesson", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Progress> progress = new HashSet<>();
+
+
 
      public Lesson(){
      }
@@ -109,4 +117,11 @@ public class Lesson {
 		this.filename = filename;
 	}
 
+    public Set<Progress> getProgress() {
+        return progress;
+    }
+
+    public void setProgress(Set<Progress> progress) {
+        this.progress = progress;
+    }
 }
