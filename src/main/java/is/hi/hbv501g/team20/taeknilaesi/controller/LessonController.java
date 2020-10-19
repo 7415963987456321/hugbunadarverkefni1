@@ -80,7 +80,8 @@ public class LessonController {
 
         // User er til, sækjum Progress listann og bætum við
         if (user!=null) {
-            progressService.save(prog);
+            if(!progressService.findIfContains(prog))
+                progressService.save(prog);
             List<Progress> p = progressService.findAllByUserId(user.getId());
             session.setAttribute("progress", p);
         }
@@ -92,7 +93,21 @@ public class LessonController {
                 List<Progress> temp = new ArrayList<>();
                 p = temp;
             }
-            p.add(prog);
+            boolean pcontainsprog = false;
+            for(Progress x : p){
+                System.out.println(x.getLesson());
+                System.out.println(prog.getLesson());
+                System.out.println(x.getLesson().getId());
+                System.out.println(x.getLesson().getId());
+                if(x.getLesson().getId()==prog.getLesson().getId()){
+                    pcontainsprog =  true;
+                    break;
+                }
+            }
+
+
+            if(!pcontainsprog)
+                p.add(prog);
             session.setAttribute("progress",p);
         }
 

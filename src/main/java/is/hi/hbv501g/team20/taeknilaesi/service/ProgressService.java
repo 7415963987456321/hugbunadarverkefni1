@@ -27,10 +27,19 @@ public class ProgressService {
             if (x.getUser().getId()==ID) {
                 temp.add(x);
             }
-
         }
         return temp;
+    }
 
+    public boolean findIfContains(Progress progress){
+        Iterable<Progress> p = progressRepository.findAll();
+
+        for(Progress x : p){
+            if(x.getUser()==progress.getUser() && x.getLesson()==progress.getLesson()){
+                return true;
+            }
+        }
+        return false;
     }
 
 
