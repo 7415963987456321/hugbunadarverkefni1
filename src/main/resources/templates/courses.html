@@ -23,6 +23,10 @@
                 </div>
             </div>
         </div>
+        <div class="card" th:each="prog : ${session.progress}" style="margin-bottom: 1rem">
+<!--            <h5 class="card-header" th:text="${{prog.user == null} ? 'anonymousUser' : '${prog.user.getName()}'"></h5>-->
+            <h5 class="card-header" th:text="${prog.lesson.getId()}"></h5>
+        </div>
     </div>
 </body>
 </html>

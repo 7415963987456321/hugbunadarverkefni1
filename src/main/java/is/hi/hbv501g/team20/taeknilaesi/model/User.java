@@ -70,4 +70,7 @@ public class User
     public void setPasswordConfirmation(String passwordConfirmation) {
         this.passwordConfirmation = passwordConfirmation;
     }
+
+    public Set<Progress> getProgress() { return progress; }
+    public void setProgress(Set<Progress> progress) { this.progress = progress; }
 }

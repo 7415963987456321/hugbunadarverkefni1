@@ -20,6 +20,7 @@
                             <video class="embed-responsive-item" th:src="|https://${url + lesson.filename}|" allowfullscreen controls></video>
                         </div>
                         <div class="form-group">
+                            <a class = "btn btn-success btn-sm" th:href="@{/course/{cid}/{id}/finish(id=${lesson.id}, cid=${lesson.courseId})}">Klára Lesson</a>
                             <label for="postingComments">Spurt og svarað</label>
                             <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="Skrifaðu athugasemd eða spruningu"></textarea>
                             <a class="btn btn-success btn-sm" href="#" role="button">Senda</a>
