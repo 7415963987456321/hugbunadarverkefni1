@@ -8,6 +8,7 @@ import is.hi.hbv501g.team20.taeknilaesi.service.ProgressService;
 import is.hi.hbv501g.team20.taeknilaesi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,18 +41,21 @@ public class CourseController {
     private String getAllCourse(@CurrentSecurityContext(expression = "authentication.name") String username, HttpSession session, Model model) {
         List<Course> coursesList = courseService.getAllCourse();
         model.addAttribute("courses", coursesList);
+        User user = uc.findUserByUsername(username);
+        session.setAttribute("user",user);
         
         //Initialize-a Progress listann
         List<Progress> p = new ArrayList<>();
         //Ef user er skráður inn, sækjum í gagnagrunn
         if(!username.equals("anonymousUser")){
-            User user = uc.findUserByUsername(username);
+            //User user = uc.findUserByUsername(username);
             List<Progress> temp = ps.findAllByUserId(user.getId());
             p = temp;
         }
         else{
-            //Sækjum progress listann úr storage
-            p = (List<Progress>)session.getAttribute("progress");
+            //Sækjum progress listann úr storage ef hann er ekki tómur og yfirskrifum
+            if((List<Progress>)session.getAttribute("progress")!=null)
+                p = (List<Progress>)session.getAttribute("progress");
         }
         session.setAttribute("progress", p);
 

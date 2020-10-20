@@ -77,6 +77,7 @@ public class LessonController {
 
 
         Progress prog = new Progress(lesson,user);
+        session.setAttribute("user",user);
 
         // User er til, sækjum Progress listann og bætum við
         if (user!=null) {
