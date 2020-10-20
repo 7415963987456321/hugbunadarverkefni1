@@ -6,6 +6,7 @@ import lombok.Data;
 
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity(name="Lesson")
@@ -123,5 +124,21 @@ public class Lesson {
 
     public void setProgress(Set<Progress> progress) {
         this.progress = progress;
+    }
+
+    public boolean isLessonInProgress(List<Progress> progress){
+         if (progress == null){
+             return false;
+         }
+         if (progress.isEmpty()){
+             return false;
+         }
+
+         for (Progress p : progress){
+             if (p.getLesson().getId() == this.id){
+                 return true;
+             }
+         }
+         return false;
     }
 }

@@ -11,7 +11,8 @@
             <div class="card-body">
                 <ul class="list-group" th:block th:each="lesson : ${course.lessons}">
                     <li class="list-group-item d-flex justify-content-between">
-                        <p th:text="${lesson.title}" class="p-0 m-0 flex-grow-1">First item</p>
+                        <p th:if="${lesson.isLessonInProgress(session.progress)}" th:text="${'Lokið - '+lesson.title}" class="p-0 m-0 flex-grow-1">First item</p>
+                        <p th:if="${!lesson.isLessonInProgress(session.progress)}" th:text="${lesson.title}" class="p-0 m-0 flex-grow-1">First item</p>
                         <button class="btn btn-info btn-sm" type="button" data-toggle="collapse" th:attr="data-target='#collapse'+${lesson.id}">Horfa</button>
                     </li>
                     <div class="collapse" th:id="'collapse'+${lesson.id}">

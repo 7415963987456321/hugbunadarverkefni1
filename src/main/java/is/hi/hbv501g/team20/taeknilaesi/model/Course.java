@@ -2,6 +2,7 @@ package is.hi.hbv501g.team20.taeknilaesi.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -69,5 +70,33 @@ public class Course {
 		this.description = description;
 	}
 
+	public boolean isCourseStarted(Set<Progress> progress){
+    	List<Integer> ids = new ArrayList<>();
+    	for (Lesson x : this.lessons){
+    		ids.add(x.getId());
+		}
 
+    	for(Progress p : progress){
+    		if (ids.contains(p.getLesson().getId()))
+					return true;
+		}
+    	return false;
+	}
+
+	public boolean isCourseFinished(Set<Progress> progress){
+    	if(progress.isEmpty()){
+    		return false;
+		}
+		List<Integer> pids = new ArrayList<>();
+		for (Progress p : progress) {
+			pids.add(p.getLesson().getId());
+		}
+
+		for (Lesson x : this.lessons){
+			if(!pids.contains(x.getId())){
+				return false;
+			}
+		}
+		return true;
+	}
 }

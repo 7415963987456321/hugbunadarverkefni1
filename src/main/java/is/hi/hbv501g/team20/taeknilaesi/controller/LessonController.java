@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import is.hi.hbv501g.team20.taeknilaesi.model.Lesson;
 import is.hi.hbv501g.team20.taeknilaesi.service.LessonService;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 
@@ -70,7 +71,7 @@ public class LessonController {
     }
 
     @GetMapping("/course/{courseId}/{id}/finish")
-    private String finishLesson(@PathVariable("courseId") int courseId, @PathVariable("id") int id, @CurrentSecurityContext(expression = "authentication.name") String username, HttpSession session, Model model) throws Exception {
+    private ModelAndView finishLesson(@PathVariable("courseId") int courseId, @PathVariable("id") int id, @CurrentSecurityContext(expression = "authentication.name") String username, HttpSession session, Model model) throws Exception {
         List<Course> course2 = courseService.getAllCourse();
         Lesson lesson = lessonService.getLessonById(id);
         User user = uc.findUserByUsername(username);
@@ -114,6 +115,6 @@ public class LessonController {
 
         model.addAttribute("courses", course2);
 
-        return "courses";
+        return new ModelAndView( "redirect:/");
     }
 }
