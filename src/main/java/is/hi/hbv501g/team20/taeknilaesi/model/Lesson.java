@@ -2,7 +2,6 @@ package is.hi.hbv501g.team20.taeknilaesi.model;
 
 import javax.persistence.*;
 
-import lombok.Data;
 
 
 @Entity

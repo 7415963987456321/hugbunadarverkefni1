@@ -7,6 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
+
 
 @Entity
 @Table
@@ -16,15 +21,17 @@ public class User
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @Column
+    @NotEmpty(message = "það vantar nafn.")
     private String name;
-    @Column
+
     private int year;
-    @Column
+    @Email(message = "það vantar tölvupóst")
     private String email;
 
-    @Column
+    @NotEmpty(message = "það vantar lykilorð")
     private String password;
+
+     @NotEmpty(message = "það vantar staðfestingu af lykilorðinu")
     @Transient
     private String passwordConfirmation;
 

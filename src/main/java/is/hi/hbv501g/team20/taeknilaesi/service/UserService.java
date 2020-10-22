@@ -44,4 +44,13 @@ public class UserService implements UserDetailsService
     private Collection<? extends GrantedAuthority> getAuthorities(String role) {
         return Arrays.asList(new SimpleGrantedAuthority(role));
     }
+
+    public User findUserByEmail(final String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public Boolean IsEmailAlreadyRegistered(String email){
+        final User user = userRepository.findByEmail(email);
+        return user != null;
+    }
 }
