@@ -7,8 +7,8 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 
-import is.hi.hbv501g.team20.taeknilaesi.model.Progress;
-import is.hi.hbv501g.team20.taeknilaesi.repository.ProgressRepository;
+import is.hi.hbv501g.team20.taeknilaesi.model.*;
+import is.hi.hbv501g.team20.taeknilaesi.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,12 +17,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import is.hi.hbv501g.team20.taeknilaesi.model.Course;
-import is.hi.hbv501g.team20.taeknilaesi.model.Lesson;
-import is.hi.hbv501g.team20.taeknilaesi.model.User;
-import is.hi.hbv501g.team20.taeknilaesi.repository.CourseRepository;
-import is.hi.hbv501g.team20.taeknilaesi.repository.LessonRepository;
-import is.hi.hbv501g.team20.taeknilaesi.repository.UserRepository;
 import is.hi.hbv501g.team20.taeknilaesi.spring.SecurityConfig;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
@@ -53,6 +47,15 @@ class DemoCommandLineRunner implements CommandLineRunner {
 
     @Autowired
     private ProgressRepository pr;
+
+    @Autowired
+    private QuizRepo quizRepo;
+
+    @Autowired
+    private QuestionRepo questionRepo;
+
+    @Autowired
+    private AnswerRepo answerRepo;
 
 
     @Override
@@ -111,6 +114,37 @@ class DemoCommandLineRunner implements CommandLineRunner {
 
         Progress p = new Progress(l6,user2);
         pr.save(p);
+
+        Quiz quiz1 = new Quiz(c1);
+
+        String spurning1 = "Spurning 1";
+        Answer svar1 = new Answer("svar1");
+        Answer svar2 = new Answer("svar2");
+        Answer svar3 = new Answer("svar3");
+        Set<Answer> svor = new HashSet<>();
+        svor.add(svar1);
+        svor.add(svar2);
+        svor.add(svar3);
+        Question q1 = new Question(spurning1,svor,"svar2");
+        svar1.setQuestion(q1);
+        svar2.setQuestion(q1);
+        svar3.setQuestion(q1);
+        q1.setQuiz(quiz1);
+        Set<Question> questions = new HashSet<>();
+        questions.add(q1);
+        quiz1.setQuestions(questions);
+        quizRepo.save(quiz1);
+        questionRepo.save(q1);
+        answerRepo.save(svar1);
+        answerRepo.save(svar2);
+        answerRepo.save(svar3);
+
+
+
+
+
+
+
 
     }
 }

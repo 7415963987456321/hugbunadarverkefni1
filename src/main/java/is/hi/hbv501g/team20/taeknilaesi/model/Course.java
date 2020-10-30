@@ -4,12 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table
@@ -28,6 +23,9 @@ public class Course {
     @Column
     @Lob
     private String description;
+
+	@OneToOne(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Quiz quiz;
 
     public Course(){}
 
@@ -68,6 +66,14 @@ public class Course {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Quiz getQuiz() {
+		return quiz;
+	}
+
+	public void setQuiz(Quiz quiz) {
+		this.quiz = quiz;
 	}
 
 	public boolean isCourseStarted(Set<Progress> progress){
