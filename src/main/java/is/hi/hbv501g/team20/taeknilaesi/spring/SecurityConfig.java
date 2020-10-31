@@ -3,6 +3,9 @@ package is.hi.hbv501g.team20.taeknilaesi.spring;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -40,16 +43,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
         .formLogin().
             loginPage("/login").permitAll().
-            loginProcessingUrl("/doLogin")
+            // loginProcessingUrl("/doLogin").
 
-        .and()
+        and()
             // .logout().permitAll().logoutUrl("/logout").logoutSuccessUrl("/")
          .logout()
                   .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                   .logoutSuccessUrl("/")
                   .invalidateHttpSession(true)        // set invalidation state when logout
                   .deleteCookies("JSESSIONID")
-                  .and()
+            .and()
               .exceptionHandling()
                   .accessDeniedPage("/403");
         http.headers().frameOptions().disable(); //h2
@@ -60,4 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public AuthenticationManager customAuthenticationManager() throws Exception {
+        return authenticationManager();
+ }
 }

@@ -9,9 +9,9 @@
         <div class="container">
             <h1>Stofna aðgang</h1>
             <form id="userForm" th:action="@{/register}" th:object="${user}" action="#" method="post" class="form-horizontal">
-                <div th:if="${#fields.hasErrors('global')}" th:errors="*{global}" class="alert alert-danger">Lykilorðinn eru ekki eins</div>
+                <!-- <div th:if="${#fields.hasErrors('global')}" th:errors="*{global}" class="alert alert-danger">Lykilorð eru ekki eins</div> -->
                 <input type="hidden" th:field="*{id}" />
-                <input type="hidden" />
+                <!-- <input type="hidden" /> -->
                 <div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
                     <label class="control-label col-xs-2" for="name">Nafn</label>
                 <div class="col-xs-10">
@@ -26,7 +26,7 @@
                 <label class="control-label col-xs-2" for="email">Tölvupóstur</label>
                 <div class="col-xs-10">
                     <input id="email" type="email" title="email" th:field="*{email}" />
-                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="help-block">Email Error</span>
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="help-block">Email error</span>
                 </div>
                 </div>
                 <div class="form-group" th:classappend="${#fields.hasErrors('password')} ? 'has-error'">

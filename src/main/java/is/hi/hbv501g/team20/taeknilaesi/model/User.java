@@ -8,30 +8,31 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 
 
 @Entity
-@Table
+@Table(name="USERS")
 public class User
 {
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NotEmpty(message = "það vantar nafn.")
     private String name;
 
     private int year;
+
     @Email(message = "það vantar tölvupóst")
     private String email;
 
     @NotEmpty(message = "það vantar lykilorð")
     private String password;
 
-     @NotEmpty(message = "það vantar staðfestingu af lykilorðinu")
+    //þarf að breyta þegar application.properties er sett á 'update'
+    // @NotEmpty(message = "það vantar staðfestingu af lykilorðinu")
     @Transient
     private String passwordConfirmation;
 

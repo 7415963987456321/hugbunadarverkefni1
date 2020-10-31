@@ -18,7 +18,8 @@ https://stackoverflow.com/questions/27649649/antmatchers-spring-security-pattern
 https://developer.okta.com/blog/2019/05/15/spring-boot-login-options
 https://stackoverflow.com/questions/233507/how-to-log-out-user-from-web-site-using-basic-authentication
 https://ducmanhphan.github.io/2019-02-22-Logout-in-Spring-Boot/
-
+** css
+https://codepen.io/robgolbeck/pen/yePRwa
 * todo
 - authorization
   - progress tracker
