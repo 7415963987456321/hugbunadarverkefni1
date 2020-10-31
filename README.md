@@ -7,7 +7,7 @@
 - [ ] Authentication (Skúli)
   - [x] Signin
   - [X] Registration
-  - [ ] Lost password
+  - [x] Lost password
   - [ ] Third party
 - [ ] Migration to postgres
 - [ ] Adding Content

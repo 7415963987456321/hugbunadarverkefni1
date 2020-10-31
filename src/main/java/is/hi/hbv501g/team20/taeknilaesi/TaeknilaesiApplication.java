@@ -45,14 +45,10 @@ public class TaeknilaesiApplication {
     public JavaMailSenderImpl mailSender() {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
         javaMailSender.setHost("smtp.gmail.com");
-        // javaMailSender.setHost("smtp.hi.is");
         javaMailSender.setProtocol("smtps");
-        // javaMailSender.setHost("localhost:8080");
         javaMailSender.setPort(465);
-        javaMailSender.setUsername("taeknilaesifyrirfullordna@gmail.com");
-        javaMailSender.setPassword("taeknilaesi");
-        //javaMailSender.set
-        
+        javaMailSender.setUsername("");
+        javaMailSender.setPassword("");
         return javaMailSender;
     }
 
@@ -70,6 +66,7 @@ class DemoCommandLineRunner implements CommandLineRunner {
     @Autowired
     private LessonRepository lr;
 
+    //þetta þarf að kommenta til baka og breyta 'spring.jpa.hibernate.ddl-auto=update' í application.properties yfir í 'create-drop'
     @Override
     @Transactional
     public void run(String... args) throws Exception {

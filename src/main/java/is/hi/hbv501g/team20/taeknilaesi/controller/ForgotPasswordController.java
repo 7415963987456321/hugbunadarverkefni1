@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -55,12 +54,8 @@ public class ForgotPasswordController {
 
             User registeredUser = userService.findUserByEmail(user.getEmail());
             ConfirmationToken confirmationToken = new ConfirmationToken(registeredUser);
-
-            System.out.println("@@@@@@@@@@@@@@@");
-            // Save it
             confirmationTokenRepository.save(confirmationToken);
 
-            // Create the email
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(registeredUser.getEmail());
             mailMessage.setSubject("Endurnýna lykilorð!");
@@ -90,31 +85,7 @@ public class ForgotPasswordController {
         return modelAndView;
     }
 
-    // @PostMapping("/forgotPasswordRestoreSuccess")
-    // public ModelAndView resetUserPassword(@ModelAttribute("userForm") User user) {
-        
-    //         System.out.println("@@@@@@@@@@EMAIL" + user.getEmail());
-    //     // ConfirmationToken token =
-    //     // confirmationTokenRepository.findByConfirmationToken(confirmationToken);
-    //     ModelAndView modelAndView = new ModelAndView();
-    //     if (user.getEmail() != null) {
-    //         // use email to find user
-    //         // User tokenUser = userService.findUserByEmail(user.getEmail());
-    //         // tokenUser.setPassword(passwordEncoder.encode(user.getPassword()));
-    //         // System.out.println(tokenUser.getPassword());
-    //         // userRepository.save(tokenUser);
-    //         modelAndView.addObject("message",
-    //                 "Lykilorð hefur verið endurnýað.");
-    //         modelAndView.setViewName("forgotPasswordRestoreSuccess");
-    //     } else {
-    //         // modelAndView.addObject("message", "Villa");
-    //         // modelAndView.setViewName("error");
-    //         System.out.println("error");
-    //     }
-        
-    //     return modelAndView;
-    // }
-    @PostMapping("forgotPasswordRestoreSuccess")
+      @PostMapping("forgotPasswordRestoreSuccess")
     public ModelAndView resetUserPassword(@RequestParam("password") final String password, @RequestParam("passwordConfirmation") final String passwordConfirmation, @RequestParam("token") String token){
         ModelAndView m = new ModelAndView();
         if (!password.equals(passwordConfirmation)) {
@@ -127,7 +98,6 @@ public class ForgotPasswordController {
 
         if (ct != null) {
             User user = ct.getUser();
-            System.out.println("@@@@@@@@@@@@@@@@@@");
             userService.changeUserPassword(user, password);
             m.setViewName("forgotPasswordRestoreSuccess");
         }

@@ -33,7 +33,7 @@ public class ConfirmationToken {
     private User user;
 
     public ConfirmationToken(){
-        
+
     }
     public ConfirmationToken(User user) {
         this.user = user;
@@ -41,36 +41,36 @@ public class ConfirmationToken {
         confirmationToken = UUID.randomUUID().toString();
     }
 
-	public long getTokenid() {
-		return tokenid;
-	}
+  public long getTokenid() {
+    return tokenid;
+  }
 
-	public void setTokenid(long tokenid) {
-		this.tokenid = tokenid;
-	}
+  public void setTokenid(long tokenid) {
+    this.tokenid = tokenid;
+  }
 
-	public String getConfirmationToken() {
-		return confirmationToken;
-	}
+  public String getConfirmationToken() {
+    return confirmationToken;
+  }
 
-	public void setConfirmationToken(String confirmationToken) {
-		this.confirmationToken = confirmationToken;
-	}
+  public void setConfirmationToken(String confirmationToken) {
+    this.confirmationToken = confirmationToken;
+  }
 
-	public Date getCreatedDate() {
-		return createdDate;
-	}
+  public Date getCreatedDate() {
+    return createdDate;
+  }
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+  public void setCreatedDate(Date createdDate) {
+    this.createdDate = createdDate;
+  }
 
-	public User getUser() {
-		return user;
-	}
+  public User getUser() {
+    return user;
+  }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+  public void setUser(User user) {
+    this.user = user;
+  }
 
 }

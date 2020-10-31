@@ -45,7 +45,6 @@ public class SecurityService{
 
         if (usernamePasswordAuthenticationToken.isAuthenticated()) {
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-            // logger.debug(String.format("Auto login %s successfully!", username));
         }
     }
 
@@ -55,7 +54,6 @@ public class SecurityService{
     }
 
     public ConfirmationToken getPasswordResetToken(final String token) {
-        System.out.println("@@@@@@@@@" + token);
         return confirmationTokenRepository.findByConfirmationToken(token);
     }
 }
