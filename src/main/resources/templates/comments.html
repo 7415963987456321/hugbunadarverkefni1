@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/tmpl}">
+<head>
+    <title>Comments</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+<div layout:fragment="content">
+
+    <div class="card" th:each="comments : ${comments}" style="margin-bottom: 1rem">
+        <h5 class="card-header" th:text="${comments.getCommentString()}"></h5>
+        <div class="card-body">
+            <p class="card-header" th:text="${comments.getUser().getEmail()}"></p>
+            <p class="card-header" th:text="${comments.getUser().getId()}"></p>
+            <p class="card-header" th:text="${comments.getUser().getName()}"></p>
+            <o class="card-header" th:text="${comments.getLesson().getTitle()}"></o>
+        </div>
+
+                    <div class="form-group">
+                        <!--
+                        <label for="comments">Spurt og svarað</label>
+                        -->
+                        <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="Skrifaðu athugasemd eða spurningu"></textarea>
+                        <a class="btn btn-success btn-sm" href="#" role="button">Senda fyrirspurn</a>
+                    </div>
+
+                </div>
+                </th:block>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
