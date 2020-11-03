@@ -115,29 +115,54 @@ class DemoCommandLineRunner implements CommandLineRunner {
         Progress p = new Progress(l6,user2);
         pr.save(p);
 
+        //Búa til quiz fyrir kúrs 1
         Quiz quiz1 = new Quiz(c1);
 
-        String spurning1 = "Spurning 1";
-        Answer svar1 = new Answer("svar1");
-        Answer svar2 = new Answer("svar2");
-        Answer svar3 = new Answer("svar3");
+        //Spurning 1
+        String spurning1 = "Hver er tilgangur fyrirlestranna?";
+        Answer svar1 = new Answer("Læra að nota spjaldtölvur");
+        Answer svar2 = new Answer("Læra að hringja úr síma");
+        Answer svar3 = new Answer("Læra að forrita");
         Set<Answer> svor = new HashSet<>();
         svor.add(svar1);
         svor.add(svar2);
         svor.add(svar3);
-        Question q1 = new Question(spurning1,svor,"svar2");
+        Question q1 = new Question(spurning1,svor,"Læra að nota spjaldtölvur");
         svar1.setQuestion(q1);
         svar2.setQuestion(q1);
         svar3.setQuestion(q1);
         q1.setQuiz(quiz1);
+
+        String spurning2 = "Hvernig skal hækka hljóð í spjaldtölvunni?";
+        Answer svar4 = new Answer("Slá spjaldtölvunni létt í harðann hlut svosem borð");
+        Answer svar5 = new Answer("Hrista spjaldtölvuna");
+        Answer svar6 = new Answer("Nota takkann hægra megin efst uppi");
+        Set<Answer> svor2 = new HashSet<>();
+        svor2.add(svar4);
+        svor2.add(svar5);
+        svor2.add(svar6);
+        Question q2 = new Question(spurning2, svor2, "Nota takkann hægra megin efst uppi");
+        svar4.setQuestion(q2);
+        svar5.setQuestion(q2);
+        svar6.setQuestion(q2);
+        q2.setQuiz(quiz1);
+
         Set<Question> questions = new HashSet<>();
         questions.add(q1);
+        questions.add(q2);
         quiz1.setQuestions(questions);
         quizRepo.save(quiz1);
         questionRepo.save(q1);
         answerRepo.save(svar1);
         answerRepo.save(svar2);
         answerRepo.save(svar3);
+
+        Progress p2 = new Progress(quiz1, user2);
+        pr.save(p2);
+
+
+
+
 
 
 

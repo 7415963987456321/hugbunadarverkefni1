@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/tmpl}">
+<head>
+    <title>Lessons</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div layout:fragment="content">
+    <div th:each="question : ${questions}">
+        <h2 th:text="${question.getQuestion()}"> Spurningin er</h2>
+        <div th:each="answer : ${question.answers}">
+            <p th:text="${answer}">Svarið er</p>
+        <input type="checkbox">
+        </div>
+</div>
+</div>
+</body>
+</html>

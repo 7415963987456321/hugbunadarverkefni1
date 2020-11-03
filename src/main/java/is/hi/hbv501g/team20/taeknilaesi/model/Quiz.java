@@ -22,6 +22,10 @@ public class Quiz {
     @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Question> questions = new HashSet<>();
 
+    @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Quiz> quiz = new HashSet<>();
+
+
     public Quiz() {
     }
 
@@ -46,4 +50,19 @@ public class Quiz {
         this.questions = questions;
     }
 
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public Set<Quiz> getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Set<Quiz> quiz) {
+        this.quiz = quiz;
+    }
 }
