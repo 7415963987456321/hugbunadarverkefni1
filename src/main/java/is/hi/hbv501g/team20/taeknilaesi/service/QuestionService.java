@@ -30,7 +30,7 @@ public class QuestionService {
                 }
             }
         }
-        while(temp.size()>numberOfMaxQuestions){
+        while(temp.size()<numberOfMaxQuestions){
             numberOfMaxQuestions--;
         }
 

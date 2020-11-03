@@ -151,14 +151,32 @@ class DemoCommandLineRunner implements CommandLineRunner {
         questions.add(q1);
         questions.add(q2);
         quiz1.setQuestions(questions);
+
+
+        Quiz quiz2 = new Quiz(c2);
+
+        String spurning3 = "Þetta er random spurning";
+        Answer svar7 = new Answer("með random svari");
+        Set<Answer> svor3 = new HashSet<>();
+        svor3.add(svar7);
+        Question q3 = new Question(spurning3, svor3, "með random svari");
+        svar7.setQuestion(q3);
+        q3.setQuiz(quiz2);
+
         quizRepo.save(quiz1);
+        quizRepo.save(quiz2);
         questionRepo.save(q1);
-        answerRepo.save(svar1);
-        answerRepo.save(svar2);
-        answerRepo.save(svar3);
+        questionRepo.save(q2);
+        questionRepo.save(q3);
+//        answerRepo.save(svar1);
+//        answerRepo.save(svar2);
+//        answerRepo.save(svar3);
 
         Progress p2 = new Progress(quiz1, user2);
         pr.save(p2);
+
+
+
 
 
 
