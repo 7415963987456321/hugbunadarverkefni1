@@ -9,10 +9,11 @@
     <div th:each="question : ${questions}">
         <h2 th:text="${question.getQuestion()}"> Spurningin er</h2>
         <div th:each="answer : ${question.answers}">
-            <p th:text="${answer}">Svarið er</p>
-        <input type="checkbox">
+            <p th:text="${answer}">Svarið er<input type="checkbox"></p>
         </div>
+
 </div>
+    <a th:href="@{/quiz/{id}/finish(id = ${courseId})}" class="btn btn-success float-left">Klára quiz</a>
 </div>
 </body>
 </html>
