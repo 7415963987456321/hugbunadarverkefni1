@@ -6,17 +6,44 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <form action="#" th:action="@{/quiz/{id}/finish(id=${courseId})}" method="post" th:object="${quizResult}">
+    <form action="#" th:action="@{/quiz/{id}/finish(id = ${courseId})}" method="POST" th:object="${quizResult}">
     <div th:each="question : ${questions}">
         <h2 th:text="${question.getQuestion()}"> Spurningin er</h2>
+
         <div th:each="answer : ${question.answers}">
-            <input type="radio" th:text="${answer}" th:field="*{answers[__${questions.indexOf(${question})}__]}" value="${answer}">Svarið er
+            <!-- <input type="radio" th:text="${answer}" th:field="*{answers[__${questions.indexOf(${question})}__]}" value="${answer}">Svarið er -->
+            <input type="checkbox" th:text="${answer}"  value="${answer}">
         </div>
 
 </div>
-        <a th:type="submit" th:href="@{/quiz/{id}/finish(id = ${courseId})}" class="btn btn-success float-left">Klára quiz</a>
-    </form>
+<!-- <a type="submit" th:href="@{/quiz/{id}/finish(id = ${courseId})}" class="btn btn-success float-left">Klára quiz</a> -->
+        <input type="submit"  class="btn btn-success float-left" value="Klára quiz">
 
-</div>
+    </form>
+    <p th:text="${quizResult.getAnswers()[0]}" ></p>
+    <p th:text="${questions[0].getId()}"></p>
+    <table>
+        <tr th:each="var : ${#vars.getVariableNames()}">
+            <td th:text="${var}"></td>
+            <td th:text="${#vars.getVariable(var)}"></td>
+        </tr>
+        <!-- 
+             Adding these manually because they are considered special.
+             see https://github.com/thymeleaf/thymeleaf/blob/thymeleaf-3.0.3.RELEASE/src/main/java/org/thymeleaf/context/WebEngineContext.java#L199
+        -->
+        <tr>
+            <td>param</td>
+            <td th:text="${#vars.getVariable('param')}"></td>
+        </tr>
+        <tr>
+            <td>session</td>
+            <td th:text="${#vars.getVariable('session')}"></td>
+        </tr>
+        <tr>
+            <td>application</td>
+            <td th:text="${#vars.getVariable('application')}"></td>
+        </tr>
+    </table>
+ </div>
 </body>
 </html>

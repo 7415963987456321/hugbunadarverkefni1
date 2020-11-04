@@ -7,8 +7,11 @@ import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -37,14 +40,19 @@ public class QuizController {
         List<Question> q = questionService.getQuestions(courseId);
         QuizResult quizResult = new QuizResult(q);
 
-        model.addAttribute("quizResult", quizResult);
+        model.addAttribute("quizResult", quizResult); //þetta er ekki að virka, alltaf tómt og krassar í post controller (null pointer exception)
         model.addAttribute("courseId", courseId);
         model.addAttribute("questions",q);
         return "quiz";
     }
 
-    @GetMapping("/quiz/{courseId}/finish")
-    private ModelAndView finishQuiz(@PathVariable("courseId") int courseId,  @CurrentSecurityContext(expression = "authentication.name") String username, HttpSession session, Model model) throws Exception {
+    @PostMapping("/quiz/{courseId}/finish")
+    private ModelAndView finishQuiz(@PathVariable("courseId") int courseId,
+            @CurrentSecurityContext(expression = "authentication.name") String username, HttpSession session,
+                                    Model model, @ModelAttribute("quizResult") QuizResult quizResult) throws Exception {
+        
+
+        // System.out.println("@@@@@@@@" + quizResult.getAnswers()); 
 
         // Ehv reikingar til að finna einkunn og ehv fleira
         //Mögulega tala við progressService til að bera saman einkunn ef a að taka quiz oft til að fa betri einkunn
