@@ -35,7 +35,9 @@ public class QuizController {
     @GetMapping("/quiz/{courseId}")
     private String takeQuiz(@PathVariable("courseId") int courseId,  @CurrentSecurityContext(expression = "authentication.name") String username, HttpSession session, Model model) throws Exception {
         List<Question> q = questionService.getQuestions(courseId);
+        QuizResult quizResult = new QuizResult(q);
 
+        model.addAttribute("quizResult", quizResult);
         model.addAttribute("courseId", courseId);
         model.addAttribute("questions",q);
         return "quiz";

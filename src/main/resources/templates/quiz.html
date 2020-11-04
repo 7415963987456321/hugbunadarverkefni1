@@ -6,14 +6,17 @@
 </head>
 <body>
 <div layout:fragment="content">
+    <form action="#" th:action="@{/quiz/{id}/finish(id=${courseId})}" method="post" th:object="${quizResult}">
     <div th:each="question : ${questions}">
         <h2 th:text="${question.getQuestion()}"> Spurningin er</h2>
         <div th:each="answer : ${question.answers}">
-            <p th:text="${answer}">Svarið er<input type="checkbox"></p>
+            <input type="radio" th:text="${answer}" th:field="*{answers[__${questions.indexOf(${question})}__]}" value="${answer}">Svarið er
         </div>
 
 </div>
-    <a th:href="@{/quiz/{id}/finish(id = ${courseId})}" class="btn btn-success float-left">Klára quiz</a>
+        <a th:type="submit" th:href="@{/quiz/{id}/finish(id = ${courseId})}" class="btn btn-success float-left">Klára quiz</a>
+    </form>
+
 </div>
 </body>
 </html>
