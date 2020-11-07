@@ -27,6 +27,8 @@ public class Course {
 	@OneToOne(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Quiz quiz;
 
+
+
     public Course(){}
 
     public Course(int id,String title, String description, List<Lesson> lessons){
@@ -83,8 +85,10 @@ public class Course {
 		}
 
     	for(Progress p : progress){
-    		if (ids.contains(p.getLesson().getId()))
+    		if(p.getLesson()!=null) {
+				if (ids.contains(p.getLesson().getId()))
 					return true;
+			}
 		}
     	return false;
 	}
@@ -95,7 +99,8 @@ public class Course {
 		}
 		List<Integer> pids = new ArrayList<>();
 		for (Progress p : progress) {
-			pids.add(p.getLesson().getId());
+			if(p.getLesson()!=null)
+				pids.add(p.getLesson().getId());
 		}
 
 		for (Lesson x : this.lessons){

@@ -9,7 +9,7 @@
         <div class="card" th:each="course : ${courses}" style="margin-bottom: 1rem">
             <h5 class="card-header" th:text="${course.title}"></h5>
             <div class="card-body">
-                <a th:if="${course.isCourseFinished(session.progress)}" th:href="@{/course/{id}(id = ${course.id})}" class="btn btn-success float-right">Lokið</a>
+                <a th:if="${course.isCourseFinished(session.progress)}" th:href="@{/quiz/{id}(id = ${course.id})}" class="btn btn-success float-right">Taka quiz</a>
                 <a th:if="${!course.isCourseStarted(session.progress)}" th:href="@{/course/{id}(id = ${course.id})}" class="btn btn-success float-right">Byrja</a>
                 <a th:if="${course.isCourseStarted(session.progress) && !course.isCourseFinished(session.progress)}" th:href="@{/course/{id}(id = ${course.id})}" class="btn btn-success float-right">Halda áfram</a>
                 <p th:text="${course.description}" class="card-text"></p>

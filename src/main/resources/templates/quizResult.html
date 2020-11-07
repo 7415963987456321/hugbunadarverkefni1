@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/tmpl}">
+<head>
+    <title>Lessons</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+<!--model.addAttribute("quizQuestions",quizQuestions);-->
+<!--model.addAttribute("QuisResult",quizResult);-->
+<!--model.addAttribute("QuizGrade",quizGrade);-->
+
+
+<div layout:fragment="content">
+    <h1>Niðurstöður prófs</h1>
+    <div th:each="spurning : ${quizQuestions} ">
+        <h3 th:text="${spurning.question}"></h3>
+        <div th:each="res :${quizResult.answers}">
+            <div th:each="svar : ${spurning.answers}">
+                <h4 th:text="'Þitt svar er : ' + ${res.answer}" th:if="${svar.answer.equals(res.answer)}"></h4>
+            </div>
+        </div>
+        <h4 th:text="'Rétt svar er :'+ ${spurning.rightAnswer}"></h4>
+    </div>
+    <h2 th:text="'Einkunn þín er ' + ${quizGrade}"></h2>
+</div>
+</body>
+</html>
+
+
+<!--${spurning.id} == ${quizResult.questions[__${quizResult.answers.indexOf(res)}__]} and-->

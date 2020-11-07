@@ -135,8 +135,10 @@ public class Lesson {
          }
 
          for (Progress p : progress){
-             if (p.getLesson().getId() == this.id){
-                 return true;
+             if(p.getLesson()!=null){
+                if (p.getLesson().getId() == this.id) {
+                    return true;
+                }
              }
          }
          return false;
