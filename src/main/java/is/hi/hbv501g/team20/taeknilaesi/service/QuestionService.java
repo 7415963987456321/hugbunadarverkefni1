@@ -43,4 +43,14 @@ public class QuestionService {
 
         return temp2;
     }
+
+    public Question getQuestionById(int id){
+        Optional<Question> question = questionRepo.findById(id);
+        if (question.isPresent()){
+            return question.get();
+        }
+        else{
+            return null;
+        }
+    }
 }

@@ -172,7 +172,7 @@ class DemoCommandLineRunner implements CommandLineRunner {
 //        answerRepo.save(svar2);
 //        answerRepo.save(svar3);
 
-        Progress p2 = new Progress(quiz1, user2);
+        Progress p2 = new Progress(quiz1, user2, 5.0);
         pr.save(p2);
 
 

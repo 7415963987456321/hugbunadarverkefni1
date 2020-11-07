@@ -27,6 +27,9 @@ public class Progress {
     @JoinColumn(name="quiz_id")
     private Quiz quiz;
 
+    @Column
+    private double quizGrade;
+
     public Progress() {
     }
 
@@ -35,9 +38,10 @@ public class Progress {
         this.user = user;
     }
 
-    public Progress(Quiz quiz, User user) {
+    public Progress(Quiz quiz, User user, double quizGrade) {
         this.quiz = quiz;
         this.user = user;
+        this.quizGrade = quizGrade;
     }
 
     public User getUser() {
@@ -70,5 +74,13 @@ public class Progress {
 
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
+    }
+
+    public double getQuizGrade() {
+        return quizGrade;
+    }
+
+    public void setQuizGrade(double quizGrade) {
+        this.quizGrade = quizGrade;
     }
 }

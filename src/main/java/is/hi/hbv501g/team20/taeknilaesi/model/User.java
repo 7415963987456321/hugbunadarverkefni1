@@ -37,6 +37,11 @@ public class User
         this.email = email;
         this.password = password;
     }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public long getId() {
         return id;
     }

@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class QuizController {
@@ -47,30 +49,47 @@ public class QuizController {
     }
 
     @PostMapping("/quiz/{courseId}/finish")
-    private ModelAndView finishQuiz(@PathVariable("courseId") int courseId,
+    private String finishQuiz(@PathVariable("courseId") int courseId,
             @CurrentSecurityContext(expression = "authentication.name") String username, HttpSession session,
                                     Model model, @ModelAttribute("quizResult") QuizResult quizResult) throws Exception {
         
 
-        // System.out.println("@@@@@@@@" + quizResult.getAnswers()); 
+        List<Question> quizQuestions = new ArrayList<>();
 
-        // Ehv reikingar til að finna einkunn og ehv fleira
-        //Mögulega tala við progressService til að bera saman einkunn ef a að taka quiz oft til að fa betri einkunn
 
-        // Þetta er bara til að setja i progress, þarf að utfæra betur!
+        int totalQuestions = quizResult.getQuestions().size();
+        int correctAnswers = 0;
+
+        for (Integer questionId : quizResult.getQuestions()){
+            Question currentQuestion = questionService.getQuestionById(questionId);
+            if (currentQuestion!=null){
+                quizQuestions.add(currentQuestion);
+                String correctAnswer = currentQuestion.getRightAnswer();
+                String studentAnswer = quizResult.getAnswers().get(quizResult.getQuestions().indexOf(questionId)).getAnswer();
+                if(correctAnswer.equals(studentAnswer)){
+                    correctAnswers++;
+                }
+            }
+        }
+        double quizGrade = (Double.valueOf(correctAnswers)/Double.valueOf(totalQuestions))*10.0;
 
         User user = userService.findUserByUsername(username);
         Quiz q = quizService.findQuizByCourseId(courseId);
         if(user!=null && q !=null) {
-            Progress p = new Progress(q, user);
-            progressService.save(p);
+            double previousHighestGrade = progressService.findHighestGradeForCourse(courseId, user.getId());
+            if (quizGrade > previousHighestGrade){
+                Progress p = new Progress(q, user, quizGrade);
+                progressService.save(p);
+            }
             System.out.println(user.getName()+" just finished quiz in course "+q.getCourse().getDescription());
         }
 
+        // setja spurningar, svor og rett svor i model og birta svo einkunn.
+        model.addAttribute("quizQuestions",quizQuestions);
+        model.addAttribute("QuisResult",quizResult);
+        model.addAttribute("quizGrade",quizGrade);
 
-        model.addAttribute("courseId", courseId);
-        model.addAttribute("questions",q);
-        return new ModelAndView("redirect:/");
+        return "quizResult";
     }
 
 
