@@ -7,8 +7,6 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 
-import is.hi.hbv501g.team20.taeknilaesi.model.*;
-import is.hi.hbv501g.team20.taeknilaesi.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,27 +15,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
-import javax.transaction.Transactional;
-
-import is.hi.hbv501g.team20.taeknilaesi.model.*;
-import is.hi.hbv501g.team20.taeknilaesi.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
-
+import is.hi.hbv501g.team20.taeknilaesi.model.Answer;
 import is.hi.hbv501g.team20.taeknilaesi.model.Comment;
 import is.hi.hbv501g.team20.taeknilaesi.model.Course;
 import is.hi.hbv501g.team20.taeknilaesi.model.Lesson;
+import is.hi.hbv501g.team20.taeknilaesi.model.Progress;
+import is.hi.hbv501g.team20.taeknilaesi.model.Question;
+import is.hi.hbv501g.team20.taeknilaesi.model.Quiz;
 import is.hi.hbv501g.team20.taeknilaesi.model.User;
+import is.hi.hbv501g.team20.taeknilaesi.repository.AnswerRepo;
 import is.hi.hbv501g.team20.taeknilaesi.repository.CommentRepository;
 import is.hi.hbv501g.team20.taeknilaesi.repository.CourseRepository;
 import is.hi.hbv501g.team20.taeknilaesi.repository.LessonRepository;
+import is.hi.hbv501g.team20.taeknilaesi.repository.ProgressRepository;
+import is.hi.hbv501g.team20.taeknilaesi.repository.QuestionRepo;
+import is.hi.hbv501g.team20.taeknilaesi.repository.QuizRepo;
 import is.hi.hbv501g.team20.taeknilaesi.repository.UserRepository;
 import is.hi.hbv501g.team20.taeknilaesi.spring.SecurityConfig;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
@@ -135,18 +127,21 @@ class DemoCommandLineRunner implements CommandLineRunner {
 
         Course c2 = new Course(3, "Internetið", "Hér verður fjallað um internetið, hvað það er, hvernig það varð til og hvernig notar maður það.", tmpLessons);
         cr.save(c2);
-        Comment cm1 = new Comment(1, "blablabla", u1.getName());
-        cmr.save(cm1);
-        Comment cm2 = new Comment(1, "meira blablabla", u2.getName());
-        cmr.save(cm2);
-        Comment cm3 = new Comment(2, "blablabla", u1.getName());
-        cmr.save(cm3);
+
+        /////////////// Comments
+        // Comment cm1 = new Comment(1, "blablabla", u1.getName());
+        // cmr.save(cm1);
+        // Comment cm2 = new Comment(1, "meira blablabla", u2.getName());
+        // cmr.save(cm2);
+        // Comment cm3 = new Comment(2, "blablabla", u1.getName());
+        // cmr.save(cm3);
+
 
         Set<Lesson> tmp2Lessons = new HashSet<>();
         tmp2Lessons.add(l3);
         tmp2Lessons.add(l6);
 
-        Progress p = new Progress(l6,user2);
+        Progress p = new Progress(l6,u2);
         pr.save(p);
 
         //Búa til quiz fyrir kúrs 1
@@ -206,22 +201,10 @@ class DemoCommandLineRunner implements CommandLineRunner {
 //        answerRepo.save(svar2);
 //        answerRepo.save(svar3);
 
-        Progress p2 = new Progress(quiz1, user2, 5.0);
+        Progress p2 = new Progress(quiz1, u2, 5.0);
         pr.save(p2);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
     }
 }

@@ -47,7 +47,7 @@ public class CourseController {
     @Autowired
     UserService uc;
 
-    UserService userService;
+    //UserService userService;
 
     @Autowired
     CommentService commentService;
@@ -127,7 +127,7 @@ public class CourseController {
 
             User user = new User();
 
-            user = userService.getUserByEmail(userDetails.getUsername());
+            user = uc.getUserByEmail(userDetails.getUsername());
 
             model.addAttribute("user", user);
         }
