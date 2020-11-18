@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import is.hi.hbv501g.team20.taeknilaesi.model.User;
 import is.hi.hbv501g.team20.taeknilaesi.repository.UserRepository;
@@ -32,6 +33,15 @@ public class UserService implements UserDetailsService
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
+
+    public User getUserByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
+    public User getUserById(int id){
+        return userRepository.findById(id);
+    }
+
     //hlutur af spring security
     public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
         final User user = userRepository.findByEmail(email);

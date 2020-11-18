@@ -9,7 +9,7 @@
         <div class="card" th:each="course : ${course}" style="margin-bottom: 1rem">
             <h5 class="card-header" th:text="${course.title}"></h5>
             <div class="card-body">
-                <ul class="list-group" th:block th:each="lesson : ${course.lessons}">
+                <ul class="list-group" th:each="lesson : ${course.lessons}">
                     <li class="list-group-item d-flex justify-content-between">
                         <p th:if="${lesson.isLessonInProgress(session.progress)}" th:text="${'Lokið - '+lesson.title}" class="p-0 m-0 flex-grow-1">First item</p>
                         <p th:if="${!lesson.isLessonInProgress(session.progress)}" th:text="${lesson.title}" class="p-0 m-0 flex-grow-1">First item</p>
@@ -22,15 +22,38 @@
                         </div>
                         <div class="form-group">
                             <a class = "btn btn-success btn-sm" th:href="@{/course/{cid}/{id}/finish(id=${lesson.id}, cid=${lesson.courseId})}">Klára Lesson</a>
+<!-- comments -->
+                        <ul class="list-group" th:each="comment : ${lesson.comments}">
+                        <div class="card bg-light mb-3" style="max-width: 28rem;">
+                            <div class="card-header" th:text="|${comment.userName} skrifaði ${#dates.format(comment.date, 'dd-MM-yyyy HH:mm')}|"></div>
+                            <div class="card-body">
+                                <p class="card-text" th:text="${comment.message}"></p>
+                            </div>
+                        </div>
+                        </ul>
+                        <!-- end comments -->
+                        <!-- new posts from ajax -->
+                       <div th:id="|postResult${lesson.id}|">
+                           <!-- end new posts<!--  --> 
+                                          <div class="form-group">
+                        <form th:id="${lesson.id}" action="#" class="form-horizontal ajaxForm" >
+
                             <label for="postingComments">Spurt og svarað</label>
-                            <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="Skrifaðu athugasemd eða spruningu"></textarea>
-                            <a class="btn btn-success btn-sm" href="#" role="button">Senda</a>
+                            <textarea class="form-control rounded-0" name="message" th:id="|message${lesson.id}|" rows="3" placeholder="Skrifaðu spurningu eða ábendingu" ></textarea>
+                            <input type="hidden" th:id="|lessonId${lesson.id}|" name="lesson" th:value="${lesson.id}">
+                            <div sec:authorize="isAuthenticated()">
+                                <input type="hidden"  th:id="|userName${lesson.id}|"  name="user"  th:value="${user.name}" >
+                                <input type="submit" class="btn btn-success btn-sm" value="Senda" >
+                            </div>
+                            <div sec:authorize="!isAuthenticated()" >
+                                    <p> Ekki hægt að pósta néma með innskraningu</p>
+                                </div>
+                        </form>
                         </div>
                     </div>
-                    </th:block>
                 </ul>
             </div>
         </div>
-    </div>
+</div> 
 </body>
 </html>
