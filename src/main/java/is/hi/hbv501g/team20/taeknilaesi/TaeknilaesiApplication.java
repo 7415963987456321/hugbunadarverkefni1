@@ -6,14 +6,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.transaction.Transactional;
+import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 
 import is.hi.hbv501g.team20.taeknilaesi.model.Answer;
 import is.hi.hbv501g.team20.taeknilaesi.model.Comment;
@@ -31,6 +36,8 @@ import is.hi.hbv501g.team20.taeknilaesi.repository.ProgressRepository;
 import is.hi.hbv501g.team20.taeknilaesi.repository.QuestionRepo;
 import is.hi.hbv501g.team20.taeknilaesi.repository.QuizRepo;
 import is.hi.hbv501g.team20.taeknilaesi.repository.UserRepository;
+import is.hi.hbv501g.team20.taeknilaesi.service.EmailService;
+import is.hi.hbv501g.team20.taeknilaesi.service.UserService;
 import is.hi.hbv501g.team20.taeknilaesi.spring.SecurityConfig;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
@@ -45,7 +52,19 @@ public class TaeknilaesiApplication {
     public LayoutDialect layoutDialect() {
         return new LayoutDialect();
     }
-}
+
+    @Bean
+    public JavaMailSenderImpl mailSender() {
+        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
+        javaMailSender.setHost("smtp.gmail.com");
+        javaMailSender.setProtocol("smtps");
+        javaMailSender.setPort(465);
+        javaMailSender.setUsername("");
+        javaMailSender.setPassword("");
+        return javaMailSender;
+    }
+
+  }
 @Component
 class DemoCommandLineRunner implements CommandLineRunner {
 
@@ -74,6 +93,7 @@ class DemoCommandLineRunner implements CommandLineRunner {
 
     private CommentRepository cmr;
     
+    //þetta þarf að kommenta til baka og breyta 'spring.jpa.hibernate.ddl-auto=update' í application.properties yfir í 'create-drop'
     @Override
     @Transactional
     public void run(String... args) throws Exception {
@@ -111,22 +131,22 @@ class DemoCommandLineRunner implements CommandLineRunner {
         Lesson l7 = new Lesson(3, "Bókamerki", "", "3.4_Bokamerki.mp4", new ArrayList<>());
         lr.save(l7);
 
-        ArrayList<Lesson> tmpLessons = new ArrayList<>();
-        tmpLessons.add(l1);
-        tmpLessons.add(l2);
+        // ArrayList<Lesson> tmpLessons = new ArrayList<>();
+        // tmpLessons.add(l1);
+        // tmpLessons.add(l2);
 
-        Course c1 = new Course(1,"Grunnatriði","Þetta námskeið fjallar um grunnotkun á spjaltölvu og utśkýrir mikilvæg hugtök sem þar koma fram.", tmpLessons);
-        cr.save(c1);
+        // Course c1 = new Course(1,"Grunnatriði","Þetta námskeið fjallar um grunnotkun á spjaltölvu og utśkýrir mikilvæg hugtök sem þar koma fram.", tmpLessons);
+        // cr.save(c1);
 
-        tmpLessons.clear();
-        tmpLessons.add(l3);
-        tmpLessons.add(l4);
-        tmpLessons.add(l5);
-        tmpLessons.add(l6);
-        tmpLessons.add(l7);
+        // tmpLessons.clear();
+        // tmpLessons.add(l3);
+        // tmpLessons.add(l4);
+        // tmpLessons.add(l5);
+        // tmpLessons.add(l6);
+        // tmpLessons.add(l7);
 
-        Course c2 = new Course(3, "Internetið", "Hér verður fjallað um internetið, hvað það er, hvernig það varð til og hvernig notar maður það.", tmpLessons);
-        cr.save(c2);
+        // Course c2 = new Course(3, "Internetið", "Hér verður fjallað um internetið, hvað það er, hvernig það varð til og hvernig notar maður það.", tmpLessons);
+        // cr.save(c2);
 
         /////////////// Comments
         // Comment cm1 = new Comment(1, "blablabla", u1.getName());
@@ -208,3 +228,4 @@ class DemoCommandLineRunner implements CommandLineRunner {
   
     }
 }
+

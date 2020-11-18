@@ -6,8 +6,8 @@
 - [ ] Quiz (Harpa)
 - [ ] Authentication (Skúli)
   - [x] Signin
-  - [x] Registration
-  - [ ] Lost password
+  - [X] Registration
+  - [x] Lost password
   - [ ] Third party
 - [ ] Migration to postgres
 - [ ] Adding Content

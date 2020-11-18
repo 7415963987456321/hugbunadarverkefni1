@@ -10,13 +10,16 @@ import is.hi.hbv501g.team20.taeknilaesi.model.User;
 import is.hi.hbv501g.team20.taeknilaesi.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.security.authentication.AuthenticationManager;
 
 @Service
 public class UserService implements UserDetailsService
@@ -25,8 +28,7 @@ public class UserService implements UserDetailsService
 
     @Autowired
     UserRepository userRepository;
-
-    @Autowired
+       @Autowired
     private PasswordEncoder passwordEncoder;
 
     public User registerNewUser(User user) {
@@ -55,7 +57,28 @@ public class UserService implements UserDetailsService
         return Arrays.asList(new SimpleGrantedAuthority(role));
     }
 
-    public User findUserByUsername(String email){
+    public User findUserByEmail(final String email) {
         return userRepository.findByEmail(email);
     }
+
+    public Boolean IsEmailAlreadyRegistered(String email){
+        final User user = userRepository.findByEmail(email);
+        return user != null;
+    }
+
+    public void changeUserPassword(final User user, final String password) {
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+    }
+    // public void save
+    // public void autoLogin(String username, String password) {
+    //     UserDetails userDetails = loadUserByUsername(username);
+    //     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+
+    //     authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+
+    //     if (usernamePasswordAuthenticationToken.isAuthenticated()) {
+    //         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+    //     }
+    // }
 }
