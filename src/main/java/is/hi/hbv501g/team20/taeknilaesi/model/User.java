@@ -22,7 +22,7 @@ public class User
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
     @NotEmpty(message = "það vantar nafn.")
     private String name;
 

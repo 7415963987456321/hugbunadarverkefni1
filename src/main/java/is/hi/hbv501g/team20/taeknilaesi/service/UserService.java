@@ -70,6 +70,10 @@ public class UserService implements UserDetailsService
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
     }
+
+    public User findUserByUsername(String email) {
+        return userRepository.findByEmail(email);
+    }
     // public void save
     // public void autoLogin(String username, String password) {
     //     UserDetails userDetails = loadUserByUsername(username);

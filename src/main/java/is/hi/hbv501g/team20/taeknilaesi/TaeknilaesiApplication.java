@@ -59,6 +59,7 @@ public class TaeknilaesiApplication {
         javaMailSender.setHost("smtp.gmail.com");
         javaMailSender.setProtocol("smtps");
         javaMailSender.setPort(465);
+        //þarf að setja google mail til að virka
         javaMailSender.setUsername("");
         javaMailSender.setPassword("");
         return javaMailSender;
@@ -93,7 +94,6 @@ class DemoCommandLineRunner implements CommandLineRunner {
 
     private CommentRepository cmr;
     
-    //þetta þarf að kommenta til baka og breyta 'spring.jpa.hibernate.ddl-auto=update' í application.properties yfir í 'create-drop'
     @Override
     @Transactional
     public void run(String... args) throws Exception {
@@ -131,24 +131,24 @@ class DemoCommandLineRunner implements CommandLineRunner {
         Lesson l7 = new Lesson(3, "Bókamerki", "", "3.4_Bokamerki.mp4", new ArrayList<>());
         lr.save(l7);
 
-        // ArrayList<Lesson> tmpLessons = new ArrayList<>();
-        // tmpLessons.add(l1);
-        // tmpLessons.add(l2);
+        ArrayList<Lesson> tmpLessons = new ArrayList<>();
+        tmpLessons.add(l1);
+        tmpLessons.add(l2);
 
-        // Course c1 = new Course(1,"Grunnatriði","Þetta námskeið fjallar um grunnotkun á spjaltölvu og utśkýrir mikilvæg hugtök sem þar koma fram.", tmpLessons);
-        // cr.save(c1);
+        Course c1 = new Course(1,"Grunnatriði","Þetta námskeið fjallar um grunnotkun á spjaltölvu og utśkýrir mikilvæg hugtök sem þar koma fram.", tmpLessons);
+        cr.save(c1);
 
-        // tmpLessons.clear();
-        // tmpLessons.add(l3);
-        // tmpLessons.add(l4);
-        // tmpLessons.add(l5);
-        // tmpLessons.add(l6);
-        // tmpLessons.add(l7);
+        tmpLessons.clear();
+        tmpLessons.add(l3);
+        tmpLessons.add(l4);
+        tmpLessons.add(l5);
+        tmpLessons.add(l6);
+        tmpLessons.add(l7);
 
-        // Course c2 = new Course(3, "Internetið", "Hér verður fjallað um internetið, hvað það er, hvernig það varð til og hvernig notar maður það.", tmpLessons);
-        // cr.save(c2);
+        Course c2 = new Course(3, "Internetið", "Hér verður fjallað um internetið, hvað það er, hvernig það varð til og hvernig notar maður það.", tmpLessons);
+        cr.save(c2);
 
-        /////////////// Comments
+        /////////////// Comments always crash????
         // Comment cm1 = new Comment(1, "blablabla", u1.getName());
         // cmr.save(cm1);
         // Comment cm2 = new Comment(1, "meira blablabla", u2.getName());

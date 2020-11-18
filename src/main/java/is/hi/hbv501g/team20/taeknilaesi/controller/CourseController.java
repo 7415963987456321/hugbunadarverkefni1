@@ -1,40 +1,35 @@
 package is.hi.hbv501g.team20.taeknilaesi.controller;
 
-import is.hi.hbv501g.team20.taeknilaesi.model.Comment;
-import is.hi.hbv501g.team20.taeknilaesi.model.Course;
-import is.hi.hbv501g.team20.taeknilaesi.model.Progress;
-import is.hi.hbv501g.team20.taeknilaesi.model.User;
-import is.hi.hbv501g.team20.taeknilaesi.service.CourseService;
-import is.hi.hbv501g.team20.taeknilaesi.service.ProgressService;
-import is.hi.hbv501g.team20.taeknilaesi.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.CurrentSecurityContext;
-import org.springframework.security.core.parameters.P;
-import is.hi.hbv501g.team20.taeknilaesi.model.Lesson;
-import is.hi.hbv501g.team20.taeknilaesi.model.User;
-import is.hi.hbv501g.team20.taeknilaesi.service.CommentService;
-import is.hi.hbv501g.team20.taeknilaesi.service.CourseService;
-import is.hi.hbv501g.team20.taeknilaesi.service.LessonService;
-import is.hi.hbv501g.team20.taeknilaesi.service.UserService;
-import net.minidev.json.JSONObject;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpSession;
-
-import static is.hi.hbv501g.team20.taeknilaesi.constants.ApplicationConstants.*;
+import static is.hi.hbv501g.team20.taeknilaesi.constants.ApplicationConstants.VIDEO_STORE;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import is.hi.hbv501g.team20.taeknilaesi.model.Comment;
+import is.hi.hbv501g.team20.taeknilaesi.model.Course;
+import is.hi.hbv501g.team20.taeknilaesi.model.Lesson;
+import is.hi.hbv501g.team20.taeknilaesi.model.Progress;
+import is.hi.hbv501g.team20.taeknilaesi.model.User;
+import is.hi.hbv501g.team20.taeknilaesi.service.CommentService;
+import is.hi.hbv501g.team20.taeknilaesi.service.CourseService;
+import is.hi.hbv501g.team20.taeknilaesi.service.LessonService;
+import is.hi.hbv501g.team20.taeknilaesi.service.ProgressService;
+import is.hi.hbv501g.team20.taeknilaesi.service.UserService;
 
 @Controller
 public class CourseController {
@@ -69,7 +64,7 @@ public class CourseController {
         model.addAttribute("courses", coursesList);
         User user = uc.findUserByUsername(username);
         session.setAttribute("user",user);
-        
+
         //Initialize-a Progress listann
         List<Progress> p = new ArrayList<>();
         //Ef user er skráður inn, sækjum í gagnagrunn
@@ -99,7 +94,7 @@ public class CourseController {
 
     @GetMapping("/course/{id}")
     private String getCourse(@PathVariable("id") int id, Model model) throws JsonProcessingException {
-        //get all lessons from course 
+        //get all lessons from course
         //iterate through lessons
         List<Lesson> ll = lessonService.findAllLessonsByCourseId(id);
         List<Comment> lc = new ArrayList<>();
@@ -111,15 +106,15 @@ public class CourseController {
             // lesson.setComments(lc);
             //System.out.println("@@@@@@@@@ " + lesson.getComments());
             // System.out.println("@@@@@@@@@ " + lc.toString());
-            
+
                  }
-        
+
         Course course = courseService.getCourseById(id);
         // System.out.println("@@@@@@@ -> " + om.writeValueAsString(course));
         // om.writeValueAsString(course);
         model.addAttribute("course",course);
         model.addAttribute("url", VIDEO_STORE);
-        
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getPrincipal() != "anonymousUser") {
         // System.out.println("@@@@@@@ " + authentication.getPrincipal());
