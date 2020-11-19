@@ -1,24 +1,26 @@
 package is.hi.hbv501g.team20.taeknilaesi.service;
 
+import is.hi.hbv501g.team20.taeknilaesi.model.Course;
 import is.hi.hbv501g.team20.taeknilaesi.model.Progress;
 import is.hi.hbv501g.team20.taeknilaesi.model.Quiz;
 import is.hi.hbv501g.team20.taeknilaesi.model.User;
+import is.hi.hbv501g.team20.taeknilaesi.repository.CourseRepository;
 import is.hi.hbv501g.team20.taeknilaesi.repository.ProgressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ProgressService {
     @Autowired
     ProgressRepository progressRepository;
 
+    @Autowired
+    CourseRepository courseRepository;
+
     public Progress save(Progress progress){
-       return progressRepository.save(progress);
+        return progressRepository.save(progress);
     }
 
     public List<Progress> findAllByUserId(long ID){
@@ -72,5 +74,27 @@ public class ProgressService {
             }
         }
         return highestGrade;
+    }
+
+    public HashMap<Integer, Double> findQuizGrades(User user) {
+        Iterable<Progress> allProgress = progressRepository.findAll();
+        HashMap<Integer, Double> gradeSet = new HashMap<>();
+
+        List<Progress> userProgress = findAllByUserId(user.getId());
+
+        Iterable<Course> allCourses = courseRepository.findAll();
+
+        for(Course tempCourse : allCourses){
+            if (tempCourse.isCourseFinished(userProgress)){
+                gradeSet.put(tempCourse.getId(), findHighestGradeForCourse(tempCourse.getId(), user.getId()));
+            }
+        }
+
+        return gradeSet;
+
+
+
+
+
     }
 }

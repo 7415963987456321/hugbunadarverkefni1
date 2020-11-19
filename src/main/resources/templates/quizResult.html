@@ -24,6 +24,8 @@
         <h4 th:text="'Rétt svar er :'+ ${spurning.rightAnswer}"></h4>
     </div>
     <h2 th:text="'Einkunn þín er ' + ${quizGrade}"></h2>
+    <a href="/" class="btn btn-info ">Til baka á forsíðu</a>
+    <a th:href="@{/quiz/{id}(id = ${courseId})}" class="btn btn-warning">Endurtaka próf fyrir hærri einkunn</a>
 </div>
 </body>
 </html>

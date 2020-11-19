@@ -5,32 +5,33 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <div layout:fragment="content">
-        <div class="card" th:each="course : ${courses}" style="margin-bottom: 1rem">
-            <h5 class="card-header" th:text="${course.title}"></h5>
-            <div class="card-body">
-                <a th:if="${course.isCourseFinished(session.progress)}" th:href="@{/quiz/{id}(id = ${course.id})}" class="btn btn-success float-right">Taka quiz</a>
-                <a th:if="${!course.isCourseStarted(session.progress)}" th:href="@{/course/{id}(id = ${course.id})}" class="btn btn-success float-right">Byrja</a>
-                <a th:if="${course.isCourseStarted(session.progress) && !course.isCourseFinished(session.progress)}" th:href="@{/course/{id}(id = ${course.id})}" class="btn btn-success float-right">Halda áfram</a>
-                <p th:text="${course.description}" class="card-text"></p>
-                <p>
-                    <button class="btn btn-info btn-sm" type="button" data-toggle="collapse" th:attr="data-target='#collapse'+${course.id}">
-                        Sýna kafla
-                    </button>
-                </p>
-                <div class="collapse" th:id="'collapse'+${course.id}">
-                    <ul th:block th:each="lesson : ${course.lessons}" class="list-group list-group-flush">
-                            <li th:if="${lesson.isLessonInProgress(session.progress)}" th:text="${'Lokið - '+lesson.title}" class="list-group-item"></li>
-                        <li th:if="${!lesson.isLessonInProgress(session.progress)}" th:text="${lesson.title}" class="list-group-item"></li>
+<div layout:fragment="content">
+    <div class="card" th:each="course : ${courses}" style="margin-bottom: 1rem">
+        <h5 class="card-header" th:text="${course.title}"></h5>
+        <div class="card-body">
+            <a th:if="${course.isCourseFinished(session.progress)}" th:href="@{/quiz/{id}(id = ${course.id})}" class="btn btn-warning float-right">Taka próf</a>
+            <a th:if="${course.isCourseFinished(session.progress)}" th:href="@{/course/{id}(id = ${course.id})}" class="btn btn-success float-right" style="margin-right:1rem">Skoða aftur</a>
+            <a th:if="${!course.isCourseStarted(session.progress)}" th:href="@{/course/{id}(id = ${course.id})}" class="btn btn-success float-right">Byrja</a>
+            <a th:if="${course.isCourseStarted(session.progress) && !course.isCourseFinished(session.progress)}" th:href="@{/course/{id}(id = ${course.id})}" class="btn btn-success float-right">Halda áfram</a>
+            <p th:text="${course.description}" class="card-text"></p>
+            <p>
+                <button class="btn btn-info btn-sm" type="button" data-toggle="collapse" th:attr="data-target='#collapse'+${course.id}">
+                    Sýna kafla
+                </button>
+            </p>
+            <div class="collapse" th:id="'collapse'+${course.id}">
+                <ul th:block th:each="lesson : ${course.lessons}" class="list-group list-group-flush">
+                    <li th:if="${lesson.isLessonInProgress(session.progress)}" th:text="${'✓  '+lesson.title}" class="list-group-item" style="color:green; font-weight: bold "></li>
+                    <li th:if="${!lesson.isLessonInProgress(session.progress)}" th:text="${lesson.title}" class="list-group-item"></li>
 
-                    </ul>
-                </div>
+                </ul>
             </div>
         </div>
-<!--        Birtir hvaða lesson er klarað neðst a skja forsiðu-->
-<!--        <div class="card" th:each="prog : ${session.progress}" style="margin-bottom: 1rem">-->
-<!--            <h5 class="card-header" th:text="${prog.lesson.getId()}"></h5>-->
-<!--        </div>-->
     </div>
+    <!--        Birtir hvaða lesson er klarað neðst a skja forsiðu-->
+    <!--        <div class="card" th:each="prog : ${session.progress}" style="margin-bottom: 1rem">-->
+    <!--            <h5 class="card-header" th:text="${prog.lesson.getId()}"></h5>-->
+    <!--        </div>-->
+</div>
 </body>
 </html>

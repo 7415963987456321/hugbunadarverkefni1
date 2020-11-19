@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/tmpl}">
+<head>
+    <title>Lessons</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div th:if="${progressPercentage!=0}" class="progress" style="height:2rem; margin-bottom: 1rem;">
+        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" th:style="'width:'+ ${progressPercentage}+'%;'" th:attr="aria-valuenow=${progressPercentage}"  aria-valuemin="0" aria-valuemax="100" th:text="${'Þú hefur lokið '+progressPercentage+'% af efninu'}"></div>
+    </div>
+
+    <H2> Hér sérð þú hvaða námskeiðum þú hefur lokið ásamt hæstu einkunn fyrir próf úr þeim</H2>
+    <h3> Þú getur alltaf tekið próf aftur til að bæta einkunn þína</h3>
+
+    <Ul th:each="course : ${courses}" class="list-group">
+        <Li class="list-group-item ">
+            <span th:if="${grades.containsKey(course.getId())}" class="d-flex justify-content-between">
+                <div>
+                    <p th:text="${'Nafn á námskeiði: '+course.title}"></p>
+                    <p th:text="${'Hæsta einkunn þín er '+grades.get(course.id)}"></p>
+                </div>
+                <a th:href="@{/quiz/{id}(id = ${course.id})}" class="btn btn-warning float-right"> Endurtaka próf fyrir hærri einkunn </a>
+            </span>
+
+            <span th:if="${!grades.containsKey(course.getId())}" class="d-flex justify-content-between">
+                <div>
+                    <p th:text="${'Nafn á námskeiði: '+course.title}"></p>
+                    <p>Þú hefur ekki lokið þessu námskeiði</p>
+                </div>
+                <a th:href="@{/course/{id}(id = ${course.id})}" class="btn btn-info float-right"> Fara í námskeið </a>
+            </span>
+
+        </li>
+    </Ul>
+</div>
+</body>
+</html>
+
+

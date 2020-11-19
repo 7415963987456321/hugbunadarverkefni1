@@ -8,16 +8,11 @@ import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class QuizController {
@@ -88,8 +83,28 @@ public class QuizController {
         model.addAttribute("quizQuestions",quizQuestions);
         model.addAttribute("QuisResult",quizResult);
         model.addAttribute("quizGrade",quizGrade);
+        model.addAttribute("courseId", courseId);
 
         return "quizResult";
+    }
+
+    @RequestMapping("/quiz-and-progress")
+    private String getQuizProgress(@CurrentSecurityContext(expression = "authentication.name") String username, HttpSession session,
+                                   Model model, @ModelAttribute("quizResult") QuizResult quizResult){
+        User user = userService.getUserByEmail(username);
+        if(user==null){
+            return "Courses";
+        }
+        HashMap<Integer, Double> grades = progressService.findQuizGrades(user);
+        List<Course> courses = courseService.getAllCourse();
+        Double gradesSize = Double.valueOf(grades.size());
+        Double coursesSize = Double.valueOf(courses.size());
+        int progressPercentage = (int)((gradesSize/coursesSize)*100);
+
+        model.addAttribute("grades", grades);
+        model.addAttribute("courses", courses);
+        model.addAttribute("progressPercentage", progressPercentage);
+        return "quizAndProgress";
     }
 
 
