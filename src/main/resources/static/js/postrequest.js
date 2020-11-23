@@ -17,7 +17,7 @@ $( document ).ready(function() {
           message : $('#message'+id).val(),
           userName :  $('#userName'+id).val()
       }
-        // console.log($('#message'+id).val());
+        console.log($('#message'+id).val());
         // console.log(id);
       $.ajax({
       type : "POST",
