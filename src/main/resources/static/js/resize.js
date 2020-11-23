@@ -23,10 +23,10 @@ $(document).ready(function(){
 
      });
          function setZoom(zoom){
-             $('body').css('zoom', zoom );
+             $('body').css('zoom', zoom);
              $('body').css('MozTransform','scale(' + zoom + ')');
              document.cookie = "zoom="+curZoom+";path=/";
-             // console.log("zoom is now: " + curZoom);
+             // console.log("zoom is now: " + curZoom)
          }
          function getCookie(name) {
              const value = `; ${document.cookie}`;
