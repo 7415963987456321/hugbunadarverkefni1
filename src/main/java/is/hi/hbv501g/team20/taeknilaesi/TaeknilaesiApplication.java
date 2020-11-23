@@ -3,11 +3,13 @@ package is.hi.hbv501g.team20.taeknilaesi;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.transaction.Transactional;
 import javax.validation.Validator;
 
+import is.hi.hbv501g.team20.taeknilaesi.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -223,72 +225,458 @@ class DemoCommandLineRunner implements CommandLineRunner {
         tmp2Lessons.add(l3);
         tmp2Lessons.add(l6);
 
-        Progress p = new Progress(l6,u2);
-        pr.save(p);
-
-        //Búa til quiz fyrir kúrs 1
-        Quiz quiz1 = new Quiz(c1);
-
-        //Spurning 1
-        String spurning1 = "Hver er tilgangur fyrirlestranna?";
-        Answer svar1 = new Answer("Læra að nota spjaldtölvur");
-        Answer svar2 = new Answer("Læra að hringja úr síma");
-        Answer svar3 = new Answer("Læra að forrita");
-        Set<Answer> svor = new HashSet<>();
-        svor.add(svar1);
-        svor.add(svar2);
-        svor.add(svar3);
-        Question q1 = new Question(spurning1,svor,"Læra að nota spjaldtölvur");
-        svar1.setQuestion(q1);
-        svar2.setQuestion(q1);
-        svar3.setQuestion(q1);
-        q1.setQuiz(quiz1);
-
-        String spurning2 = "Hvernig skal hækka hljóð í spjaldtölvunni?";
-        Answer svar4 = new Answer("Slá spjaldtölvunni létt í harðann hlut svosem borð");
-        Answer svar5 = new Answer("Hrista spjaldtölvuna");
-        Answer svar6 = new Answer("Nota takkann hægra megin efst uppi");
-        Set<Answer> svor2 = new HashSet<>();
-        svor2.add(svar4);
-        svor2.add(svar5);
-        svor2.add(svar6);
-        Question q2 = new Question(spurning2, svor2, "Nota takkann hægra megin efst uppi");
-        svar4.setQuestion(q2);
-        svar5.setQuestion(q2);
-        svar6.setQuestion(q2);
-        q2.setQuiz(quiz1);
-
-        Set<Question> questions = new HashSet<>();
-        questions.add(q1);
-        questions.add(q2);
-        quiz1.setQuestions(questions);
+        // Láta unni klára alla nema 1 lesson í course 1
+        List<Progress> allButOneLessonInCourse1 = new ArrayList<>();
 
 
-        Quiz quiz2 = new Quiz(c2);
+        Iterable<Course> allCourses = cr.findAll();
+        Course course3 = null;
+        for (Course c : allCourses){
+            if (c.getId()==1)
+                course3 = c;
+        }
 
-        String spurning3 = "Þetta er random spurning";
-        Answer svar7 = new Answer("með random svari");
-        Set<Answer> svor3 = new HashSet<>();
-        svor3.add(svar7);
-        Question q3 = new Question(spurning3, svor3, "með random svari");
-        q3.setLogo("wifi");
-        svar7.setQuestion(q3);
-        q3.setQuiz(quiz2);
+        if(course3!=null) {
+            for (Lesson lesson : course3.getLessons()) {
+                Progress temp = new Progress(lesson, u1);
+                allButOneLessonInCourse1.add(temp);
+            }
+            allButOneLessonInCourse1.remove(allButOneLessonInCourse1.size()-1);
 
-        quizRepo.save(quiz1);
-        quizRepo.save(quiz2);
-        questionRepo.save(q1);
-        questionRepo.save(q2);
-        questionRepo.save(q3);
-//        answerRepo.save(svar1);
-//        answerRepo.save(svar2);
-//        answerRepo.save(svar3);
+            for (Progress p : allButOneLessonInCourse1){
+                pr.save(p);
+            }
+        }
 
-        Progress p2 = new Progress(quiz1, u2, 5.0);
-        pr.save(p2);
+        // Temp breytur til að búa til allar spurningar
+        String tempQuestionString;
+        Set<Answer> tempAnswer;
+        Question tempQuestion;
+        Set<Question> tempQuestions;
+        Quiz tempQuiz;
+
+        // búa til quiz og tengja við kúrs
+        // Quiz er samansamn spurninga úr hverjum course
+        tempQuiz = new Quiz(c1);
+        // Samansafn spurninga fyrir kúrs
+        tempQuestions = new HashSet<>();
+
+        //////////////////////////////////////
+        tempQuestionString = "Hver er tilgangur fyrirlestranna?";
+        tempAnswer = new HashSet<>();
+        tempAnswer.add(new Answer("Læra að nota spjaldtölvur"));
+        tempAnswer.add(new Answer("Læra að hringja úr síma"));
+        tempAnswer.add(new Answer("Læra að forrita"));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Læra að nota spjaldtölvur");
+
+        // Tengja svörin við spurninga
+        for(Answer answer : tempAnswer){
+            answer.setQuestion(tempQuestion);
+        }
+        // Tengjua spurninguna við quizzið
+        tempQuestion.setQuiz(tempQuiz);
+        // Safna spurning í spurningalista
+        tempQuestions.add(tempQuestion);
+        //////////////////////////////////////
+        tempQuestionString = "Hvernig skal hækka hljóðið í spjaldtölvunni?";
+        tempAnswer = new HashSet<>();
+        tempAnswer.add(new Answer("Slá spjaldtölvunni létt í harðan hlut, svosem borð"));
+        tempAnswer.add(new Answer("Hrista spjaldtölvuna"));
+        tempAnswer.add(new Answer("Nota takkann hægra megin efst uppi"));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Nota takkann hægra megin efst uppi");
+
+        // Tengja svörin við spurninga
+        for(Answer answer : tempAnswer){
+            answer.setQuestion(tempQuestion);
+        }
+        // Tengjua spurninguna við quizzið
+        tempQuestion.setQuiz(tempQuiz);
+        // Safna spurning í spurningalista
+        tempQuestions.add(tempQuestion);
+        //////////////////////////////////////
+        tempQuestionString = "Hvernig er best að ýta á skjá spjaldtölvunnar";
+        tempAnswer = new HashSet<>();
+        tempAnswer.add(new Answer("Ýta fast til að skjárinn nemi snertingu"));
+        tempAnswer.add(new Answer("Nota marga putta"));
+        tempAnswer.add(new Answer("Nota aðeins einn eða tvo putta og ýta laust"));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Nota aðeins einn eða tvo putta og yta laust");
+
+        // Tengja svörin við spurninga
+        for(Answer answer : tempAnswer){
+            answer.setQuestion(tempQuestion);
+        }
+        // Tengjua spurninguna við quizzið
+        tempQuestion.setQuiz(tempQuiz);
+        // Safna spurning í spurningalista
+        tempQuestions.add(tempQuestion);
+        //////////////////////////////////////
+        tempQuestionString = "Hvernig skal fletta á milli á skjánum";
+        tempAnswer = new HashSet<>();
+        tempAnswer.add(new Answer("Nota einn fingur og renna örsnöggt upp, niður, hægri eða vinstri"));
+        tempAnswer.add(new Answer("Snúa spjaldtölvunni á hlið þar til hún flettir"));
+        tempAnswer.add(new Answer("Ekki er hægt að fletta á spjaldtölvu"));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Nota einn fingur og renna örsnöggt upp, niður, hægri eða vinstri");
+
+        // Tengja svörin við spurninga
+        for(Answer answer : tempAnswer){
+            answer.setQuestion(tempQuestion);
+        }
+        // Tengjua spurninguna við quizzið
+        tempQuestion.setQuiz(tempQuiz);
+        // Safna spurning í spurningalista
+        tempQuestions.add(tempQuestion);
+        //////////////////////////////////////
+        tempQuestionString = "Hvað gerir heimatakkinn";
+        tempAnswer = new HashSet<>();
+        tempAnswer.add(new Answer("Fer beint aftur á heimaskjáinn"));
+        tempAnswer.add(new Answer("Sýnir yfirlit yfir opin forrit í bakrunni"));
+        tempAnswer.add(new Answer("Fer til baka í síðasta forrit sem var opnað"));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Fer beint aftur á heimaskjáinn");
+
+        // Tengja svörin við spurninga
+        for(Answer answer : tempAnswer){
+            answer.setQuestion(tempQuestion);
+        }
+        // Tengjua spurninguna við quizzið
+        tempQuestion.setQuiz(tempQuiz);
+        // Safna spurning í spurningalista
+        tempQuestions.add(tempQuestion);
+        //////////////////////////////////////
+        tempQuestionString = "Hvernig skal slá inn séríslenska stafi svosem á, í, é, ý á lyklaborðinu";
+        tempAnswer = new HashSet<>();
+        tempAnswer.add(new Answer("Halda skal inni a til að fá á og svo framvegis"));
+        tempAnswer.add(new Answer("Ýta skal tvisvar örsnöggt á a til að fá á og svo framvegis"));
+        tempAnswer.add(new Answer("Til að fá upp þessa stafi þarf að snúa spjaldtölvunni á hvolf"));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Halda skal inni a til að fá á og svo framvegis");
+
+        // Tengja svörin við spurninga
+        for(Answer answer : tempAnswer){
+            answer.setQuestion(tempQuestion);
+        }
+        // Tengjua spurninguna við quizzið
+        tempQuestion.setQuiz(tempQuiz);
+        // Safna spurning í spurningalista
+        tempQuestions.add(tempQuestion);
+        //////////////////////////////////////
+        tempQuestionString = " Fyrir hvað stendur þetta merki?";
+        tempAnswer = new HashSet<>();
+        tempAnswer.add(new Answer("Stendur fyrir stillingar"));
+        tempAnswer.add(new Answer("Stendur fyrir þráðlaust internet"));
+        tempAnswer.add(new Answer("Stendur fyrir skeiðklukku"));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Stendur fyrir stillingar");
+        tempQuestion.setLogo("settings");
+
+        // Tengja svörin við spurninga
+        for(Answer answer : tempAnswer){
+            answer.setQuestion(tempQuestion);
+        }
+        // Tengjua spurninguna við quizzið
+        tempQuestion.setQuiz(tempQuiz);
+        // Safna spurning í spurningalista
+        tempQuestions.add(tempQuestion);
+        //////////////////////////////////////
+        tempQuestionString = " Fyrir hvað stendur þetta merki?";
+        tempAnswer = new HashSet<>();
+        tempAnswer.add(new Answer("Stendur fyrir birtustig skjás"));
+        tempAnswer.add(new Answer("Stendur fyrir þráðlaust internet"));
+        tempAnswer.add(new Answer("Stendur fyrir hljóðstillingar"));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Stendur fyrir þráðlaust internet");
+        tempQuestion.setLogo("wifi");
+
+        // Tengja svörin við spurninga
+        for(Answer answer : tempAnswer){
+            answer.setQuestion(tempQuestion);
+        }
+        // Tengjua spurninguna við quizzið
+        tempQuestion.setQuiz(tempQuiz);
+        // Safna spurning í spurningalista
+        tempQuestions.add(tempQuestion);
 
 
-  
+
+        // Að lokum, tengja quiz við allar spurningar
+        tempQuiz.setQuestions(tempQuestions);
+        quizRepo.save(tempQuiz);
+
+
+        //////////////////////////////////////
+
+
+        // búa til quiz og tengja við kúrs
+        // Quiz er samansamn spurninga úr hverjum course
+        tempQuiz = new Quiz(c2);
+        // Samansafn spurninga fyrir kúrs
+        tempQuestions = new HashSet<>();
+
+
+        //////////////////////////////////////
+        tempQuestionString = "Hvað er lén eða slóð";
+        tempAnswer = new HashSet<>();
+        tempAnswer.add(new Answer("Heimilisfang vefsíðu"));
+        tempAnswer.add(new Answer("Einskonar slóð sem vefsíður mynda og ber að varast"));
+        tempAnswer.add(new Answer("Stillingaratriði í vafra spjaldtölvunnar til að gera nettenginuna hraðvirkari"));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Heimilisfang vefsíðu");
+
+
+        // Tengja svörin við spurninga
+        for(Answer answer : tempAnswer){
+            answer.setQuestion(tempQuestion);
+        }
+        // Tengjua spurninguna við quizzið
+        tempQuestion.setQuiz(tempQuiz);
+        // Safna spurning í spurningalista
+        tempQuestions.add(tempQuestion);
+        //////////////////////////////////////
+        tempQuestionString = "Hver er ending á vefslóð íslenskra vefsíðna";
+        tempAnswer = new HashSet<>();
+        tempAnswer.add(new Answer(".is"));
+        tempAnswer.add(new Answer(".com"));
+        tempAnswer.add(new Answer(".ice"));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, ".is");
+
+
+        // Tengja svörin við spurninga
+        for(Answer answer : tempAnswer){
+            answer.setQuestion(tempQuestion);
+        }
+        // Tengjua spurninguna við quizzið
+        tempQuestion.setQuiz(tempQuiz);
+        // Safna spurning í spurningalista
+        tempQuestions.add(tempQuestion);
+        //////////////////////////////////////
+        tempQuestionString = "Hvað er flipi í vafra spjaldtölvunnar";
+        tempAnswer = new HashSet<>();
+        tempAnswer.add(new Answer("Leið til þess að opna margar vefsíður í einu"));
+        tempAnswer.add(new Answer("Spjaldtölvan birt myndir af peysum með krögum"));
+        tempAnswer.add(new Answer("Íslensk þýðing af enska orðinu flip, skjárinn snýst á hlið"));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Leið til þess að opna margar vefsíður í einu");
+
+
+        // Tengja svörin við spurninga
+        for(Answer answer : tempAnswer){
+            answer.setQuestion(tempQuestion);
+        }
+        // Tengjua spurninguna við quizzið
+        tempQuestion.setQuiz(tempQuiz);
+        // Safna spurning í spurningalista
+        tempQuestions.add(tempQuestion);
+        //////////////////////////////////////
+        tempQuestionString = " Fyrir hvað stendur þetta merki?";
+        tempAnswer = new HashSet<>();
+        tempAnswer.add(new Answer("Bókamerki"));
+        tempAnswer.add(new Answer("Endurhlaða vefsíðuna"));
+        tempAnswer.add(new Answer("Heimasíða"));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Bókamerki");
+        tempQuestion.setLogo("bookmark");
+
+
+        // Tengja svörin við spurninga
+        for(Answer answer : tempAnswer){
+            answer.setQuestion(tempQuestion);
+        }
+        // Tengjua spurninguna við quizzið
+        tempQuestion.setQuiz(tempQuiz);
+        // Safna spurning í spurningalista
+        tempQuestions.add(tempQuestion);
+
+
+
+        // Að lokum, tengja quiz við allar spurningar
+        tempQuiz.setQuestions(tempQuestions);
+        quizRepo.save(tempQuiz);
+
+
+        //////////////////////////////////////
+
+
+        // búa til quiz og tengja við kúrs
+        // Quiz er samansamn spurninga úr hverjum course
+        tempQuiz = new Quiz(c3);
+        // Samansafn spurninga fyrir kúrs
+        tempQuestions = new HashSet<>();
+
+
+        //////////////////////////////////////
+        tempQuestionString = "Hvernig fær maður rafræn skilríki";
+        tempAnswer = new HashSet<>();
+        tempAnswer.add(new Answer("Mæta með símann og skilríki í banka eða símafyrirtæki"));
+        tempAnswer.add(new Answer("Panta skilríkin með því að hringja í sýslumann"));
+        tempAnswer.add(new Answer("Í næstu innkaupaverslun"));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Mæta með símann og skilríki í banka eða símafyrirtæki");
+
+
+        // Tengja svörin við spurninga
+        for(Answer answer : tempAnswer){
+            answer.setQuestion(tempQuestion);
+        }
+        // Tengjua spurninguna við quizzið
+        tempQuestion.setQuiz(tempQuiz);
+        // Safna spurning í spurningalista
+        tempQuestions.add(tempQuestion);
+        //////////////////////////////////////
+        tempQuestionString = "Hvernig skráir maður sig inn með rafrænum skilríkjum";
+        tempAnswer = new HashSet<>();
+        tempAnswer.add(new Answer("Slegið er inn notendanafn og lykilorð"));
+        tempAnswer.add(new Answer("Slegið er inn símanúmer og svo staðfest í síma með pin númeri"));
+        tempAnswer.add(new Answer("Slegið er inn símanúmer og svo staðfest í síma með pin númeri"));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Hvernig skráir maður sig inn með rafrænum skilríkjum");
+
+
+        // Tengja svörin við spurninga
+        for(Answer answer : tempAnswer){
+            answer.setQuestion(tempQuestion);
+        }
+        // Tengjua spurninguna við quizzið
+        tempQuestion.setQuiz(tempQuiz);
+        // Safna spurning í spurningalista
+        tempQuestions.add(tempQuestion);
+        //////////////////////////////////////
+        tempQuestionString = "Hvað er hægt að gera með rafrænum skilríkjum";
+        tempAnswer = new HashSet<>();
+        tempAnswer.add(new Answer("Skráð sig inn í vefbanka og tekið lán, skoðað heilsuveru eða Íslendingabók og margt fleira"));
+        tempAnswer.add(new Answer("Borga innkaup rafrænt"));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Skráð sig inn í vefbanka og tekið lán, skoðað heilsuveru eða Íslendingabók og margt fleira");
+
+
+        // Tengja svörin við spurninga
+        for(Answer answer : tempAnswer){
+            answer.setQuestion(tempQuestion);
+        }
+        // Tengjua spurninguna við quizzið
+        tempQuestion.setQuiz(tempQuiz);
+        // Safna spurning í spurningalista
+        tempQuestions.add(tempQuestion);
+
+
+
+
+
+
+        // Að lokum, tengja quiz við allar spurningar
+        tempQuiz.setQuestions(tempQuestions);
+        quizRepo.save(tempQuiz);
+
+
+
+
+        //////////////////////////////////////
+
+
+        // búa til quiz og tengja við kúrs
+        // Quiz er samansamn spurninga úr hverjum course
+        tempQuiz = new Quiz(c4);
+        // Samansafn spurninga fyrir kúrs
+        tempQuestions = new HashSet<>();
+
+
+        //////////////////////////////////////
+        tempQuestionString = "Góð venja er að senda aldrei kreditkortanúmer í gegnum tölvupóst eða facebook einkaskilaboð";
+        tempAnswer = new HashSet<>();
+        tempAnswer.add(new Answer("Satt"));
+        tempAnswer.add(new Answer("Ósatt"));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Satt");
+
+
+        // Tengja svörin við spurninga
+        for(Answer answer : tempAnswer){
+            answer.setQuestion(tempQuestion);
+        }
+        // Tengjua spurninguna við quizzið
+        tempQuestion.setQuiz(tempQuiz);
+        // Safna spurning í spurningalista
+        tempQuestions.add(tempQuestion);
+        //////////////////////////////////////
+        tempQuestionString = "Öruggt er að ýta á alla hlekki í tölvupósti";
+        tempAnswer = new HashSet<>();
+        tempAnswer.add(new Answer("Satt"));
+        tempAnswer.add(new Answer("Ósatt"));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Ósatt");
+
+
+        // Tengja svörin við spurninga
+        for(Answer answer : tempAnswer){
+            answer.setQuestion(tempQuestion);
+        }
+        // Tengjua spurninguna við quizzið
+        tempQuestion.setQuiz(tempQuiz);
+        // Safna spurning í spurningalista
+        tempQuestions.add(tempQuestion);
+        //////////////////////////////////////
+        tempQuestionString = "Hvað er ruslpóstur";
+        tempAnswer = new HashSet<>();
+        tempAnswer.add(new Answer("Tölvupóstur sem inniheldur texta sem enginn skilur"));
+        tempAnswer.add(new Answer("Tölvupóstur sem er gerður til að komast yfir viðkvæmar upplýsingar svo sem kortanúmer"));
+        tempAnswer.add(new Answer("Tölvupóstur sem sendur var á vitlaust póstfang, svona eins og ef einhver hringir í vitlaust númer"));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Tölvupóstur sem er gerður til að komast yfir viðkvæmar upplýsingar svo sem kortanúmer");
+
+
+        // Tengja svörin við spurninga
+        for(Answer answer : tempAnswer){
+            answer.setQuestion(tempQuestion);
+        }
+        // Tengjua spurninguna við quizzið
+        tempQuestion.setQuiz(tempQuiz);
+        // Safna spurning í spurningalista
+        tempQuestions.add(tempQuestion);
+        //////////////////////////////////////
+        tempQuestionString = "Hvað er nettröll?";
+        tempAnswer = new HashSet<>();
+        tempAnswer.add(new Answer("Manneskjur sem eru yfir meðalhæð og nota internetið"));
+        tempAnswer.add(new Answer("Manneskjur sem skrifa m.a. athugasemdir í þeim tilgangi að særa eða koma af stað rifrildi"));
+        tempAnswer.add(new Answer("Manneskjur sem nota internetið á góðann hátt"));
+        tempAnswer.add(new Answer("Manneskjur sem skrifa mikið af athugasemdum"));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Manneskjur sem skrifa m.a. athugasemdir í þeim tilgangi að særa eða koma af stað rifrildi");
+
+
+        // Tengja svörin við spurninga
+        for(Answer answer : tempAnswer){
+            answer.setQuestion(tempQuestion);
+        }
+        // Tengjua spurninguna við quizzið
+        tempQuestion.setQuiz(tempQuiz);
+        // Safna spurning í spurningalista
+        tempQuestions.add(tempQuestion);
+        //////////////////////////////////////
+        tempQuestionString = "Ef myndir eru settar á internetið og síðan eytt get ég verið fullviss um að enginn sjái þær síðar?";
+        tempAnswer = new HashSet<>();
+        tempAnswer.add(new Answer("Nei, það sem er sett á internetið getur verið þar lengi, önnur manneskja gæti hafa afritað myndina"));
+        tempAnswer.add(new Answer("Já, myndinni er eytt og enginn getur séð hana aftur"));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Nei, það sem er sett á internetið getur verið þar lengi, önnur manneskja gæti hafa afritað myndina");
+
+
+        // Tengja svörin við spurninga
+        for(Answer answer : tempAnswer){
+            answer.setQuestion(tempQuestion);
+        }
+        // Tengjua spurninguna við quizzið
+        tempQuestion.setQuiz(tempQuiz);
+        // Safna spurning í spurningalista
+        tempQuestions.add(tempQuestion);
+        //////////////////////////////////////
+        tempQuestionString = "Setja má inn myndir af hverjum sem er á facebook?";
+        tempAnswer = new HashSet<>();
+        tempAnswer.add(new Answer("Nei, passa verður að fylgja persónuverndarlögum. Sérstaklega þegar börn og ungmenni á í hlut"));
+        tempAnswer.add(new Answer("Já, auðvitað"));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Nei, passa verður að fylgja persónuverndarlögum. Sérstaklega þegar börn og ungmenni á í hlut");
+
+
+        // Tengja svörin við spurninga
+        for(Answer answer : tempAnswer){
+            answer.setQuestion(tempQuestion);
+        }
+        // Tengjua spurninguna við quizzið
+        tempQuestion.setQuiz(tempQuiz);
+        // Safna spurning í spurningalista
+        tempQuestions.add(tempQuestion);
+
+
+
+
+        // Að lokum, tengja quiz við allar spurningar
+        tempQuiz.setQuestions(tempQuestions);
+        quizRepo.save(tempQuiz);
+
+
     }
 }
 

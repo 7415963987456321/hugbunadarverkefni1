@@ -19,7 +19,7 @@ public class QuestionService {
     //get random questions for course
     public List<Question> getQuestions(int courseid){
 
-        int numberOfMaxQuestions = 2;
+        int numberOfMaxQuestions = 5;
         Iterable<Question> allQuestion = questionRepo.findAll();
         List<Question> temp = new ArrayList<>();
 
