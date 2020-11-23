@@ -104,7 +104,7 @@ public class CourseController {
              lc = commentService.getByLessonId(lesson.getId());
              lesson.addComments(lc);
             // lesson.setComments(lc);
-            System.out.println("@@@@@@@@@ " + lesson.getComments());
+            // System.out.println("@@@@@@@@@ " + lesson.getComments());
             // System.out.println("@@@@@@@@@ " + lc.toString());
 
                  }

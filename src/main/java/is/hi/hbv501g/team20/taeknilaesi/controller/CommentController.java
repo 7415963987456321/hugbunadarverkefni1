@@ -37,7 +37,7 @@ public class CommentController {
         Comment comment = new Comment(cDto.getLessonId(),cDto.getMessage(),cDto.getUserName());
         commentService.SaveNewPost(comment);
         // Comment comment2 = new Comment();
-        System.out.println("@@@@lessonId: " + cDto.getLessonId());
+        // System.out.println("@@@@lessonId: " + cDto.getLessonId());
         return comment;
     }
 }
