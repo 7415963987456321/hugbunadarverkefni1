@@ -27,6 +27,8 @@ public class Question {
 
     private String rightAnswer;
 
+    private String logo;
+
     public Question() {
     }
 
@@ -75,5 +77,13 @@ public class Question {
 
     public void setRightAnswer(String rightAnswer) {
         this.rightAnswer = rightAnswer;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 }

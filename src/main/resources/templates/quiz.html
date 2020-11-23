@@ -9,11 +9,17 @@
 <div layout:fragment="content">
     <form action="#" th:action="@{/quiz/{id}/finish(id = ${courseId})}" method="POST" th:object="${quizResult}">
         <div th:each="question : ${questions}">
-            <h2 th:text="${question.getQuestion()}"> Spurningin er</h2>
+            <span th:if="${question.logo != null}" class="d-flex">
+                <i class="large material-icons" th:text="${question.logo}"></i>
+                <h2 th:text="${'  '+question.getQuestion()}"> Spurningin er</h2>
+            </span>
+            <span th:unless="${question.logo != null}">
+                <h2 th:text="${question.getQuestion()}"> Spurningin er</h2>
+            </span>
             <input type="hidden" th:field="*{questions[__${questions.indexOf(question)}__]}">
             <div th:each="answer : ${question.answers}">
                 <input th:type="radio" th:field="*{answers[__${questions.indexOf(question)}__]}" th:id="*{answers}"
-                       th:value="${answer.getId()}" th:text="${answer}" required="required">
+                       th:value="${answer.getId()}" th:text="${' ' + answer}" required="required">
             </div>
         </div>
         <input type="submit" class="btn btn-success float-left" value="Klára quiz">

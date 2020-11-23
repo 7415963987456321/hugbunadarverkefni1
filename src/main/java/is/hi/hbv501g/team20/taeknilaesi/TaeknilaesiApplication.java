@@ -271,6 +271,7 @@ class DemoCommandLineRunner implements CommandLineRunner {
         Set<Answer> svor3 = new HashSet<>();
         svor3.add(svar7);
         Question q3 = new Question(spurning3, svor3, "með random svari");
+        q3.setLogo("wifi");
         svar7.setQuestion(q3);
         q3.setQuiz(quiz2);
 
