@@ -60,8 +60,8 @@ public class TaeknilaesiApplication {
         javaMailSender.setProtocol("smtps");
         javaMailSender.setPort(465);
         //þarf að setja google mail til að virka
-        javaMailSender.setUsername("");
-        javaMailSender.setPassword("");
+        javaMailSender.setUsername("taeknilaesifyrirfullordna@gmail.com");
+        javaMailSender.setPassword("taeknilaesi");
         return javaMailSender;
     }
 
@@ -101,10 +101,10 @@ class DemoCommandLineRunner implements CommandLineRunner {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(10, new SecureRandom());
         String encodedPassword1 = bCryptPasswordEncoder.encode("1234");
         String encodedPassword2 = bCryptPasswordEncoder.encode("qwerty");
-        User u1 = new User("unnur", 1935, "unnur@gmail.com", encodedPassword1);
+        User u1 = new User("unnur", "1940", "unnur@gmail.com", encodedPassword1);
         //  sr.save(new User("unnur", 1935, "unnur@gmail.com",encodedPassword1));
         sr.save(u1);
-        User u2 = new User("jon", 1935, "jon@gmail.com", encodedPassword2);
+        User u2 = new User("jon", "1939", "jon@gmail.com", encodedPassword2);
         // sr.save(new User("jon", 1935, "jon@gmail.com",encodedPassword2)) ;
         sr.save(u2);
 
@@ -143,9 +143,9 @@ class DemoCommandLineRunner implements CommandLineRunner {
         lr.save(l16);
         Lesson l17 = new Lesson(3, "Hvað er internetið","Internetið er alþjóðlegt kerfi tölvuneta sem á sinn uppruna í bandaríska hernum á kalda stríðs tímabilinu og het arpanet, en háskólar sáu um þróun og veittu sínu starfsfólki og nemum aðgengi. Nétið eins og það er helst notað í dag var þróað af tölvunarfæðingnum Tim Berner Lee hjá CERN um 1990 og kallaði hann það hypertext. Hann átti síðan líka stóran hlut í því að tryggja að netið sé hlutlaust og ekki háð ríkisstjórnum.","3.1.1_Hvad_er_internetid.mp4", new ArrayList<>());
         lr.save(l17);
-        Lesson l18 = new Lesson(3, "Hvað er lén","","3.1.2_Hvar_er_len.mp4", new ArrayList<>());
+        Lesson l18 = new Lesson(3, "Hvað er lén?","","3.1.2_Hvar_er_len.mp4", new ArrayList<>());
         lr.save(l18);
-        Lesson l19 = new Lesson(3, "Leitarstikan", "", "3.1.2_Hvar_er_len.mp4", new ArrayList<>());
+        Lesson l19 = new Lesson(3, "Leitarstikan", "", "3.2_Leitarstikan.mp4", new ArrayList<>());
         lr.save(l19);
         Lesson l21 = new Lesson(3, "Flipar", "", "3.3_Flipar.mp4", new ArrayList<>());
         lr.save(l21);
@@ -266,7 +266,7 @@ class DemoCommandLineRunner implements CommandLineRunner {
 
         Quiz quiz2 = new Quiz(c2);
 
-        String spurning3 = "Þetta er random spurning";
+        String spurning3 = "Þetta er random spurning ";
         Answer svar7 = new Answer("með random svari");
         Set<Answer> svor3 = new HashSet<>();
         svor3.add(svar7);
