@@ -36,10 +36,12 @@ public class QuizController {
     private String takeQuiz(@PathVariable("courseId") int courseId,  @CurrentSecurityContext(expression = "authentication.name") String username, HttpSession session, Model model) throws Exception {
         List<Question> q = questionService.getQuestions(courseId);
         QuizResult quizResult = new QuizResult(q);
+        Course course = courseService.getCourseById(courseId);
 
         model.addAttribute("quizResult", quizResult); //þetta er ekki að virka, alltaf tómt og krassar í post controller (null pointer exception)
         model.addAttribute("courseId", courseId);
         model.addAttribute("questions",q);
+        model.addAttribute("courseName", course.getTitle());
         return "quiz";
     }
 

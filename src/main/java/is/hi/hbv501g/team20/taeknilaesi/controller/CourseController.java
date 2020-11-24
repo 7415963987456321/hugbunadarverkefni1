@@ -3,6 +3,7 @@ package is.hi.hbv501g.team20.taeknilaesi.controller;
 import static is.hi.hbv501g.team20.taeknilaesi.constants.ApplicationConstants.VIDEO_STORE;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import is.hi.hbv501g.team20.taeknilaesi.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
@@ -25,11 +27,6 @@ import is.hi.hbv501g.team20.taeknilaesi.model.Course;
 import is.hi.hbv501g.team20.taeknilaesi.model.Lesson;
 import is.hi.hbv501g.team20.taeknilaesi.model.Progress;
 import is.hi.hbv501g.team20.taeknilaesi.model.User;
-import is.hi.hbv501g.team20.taeknilaesi.service.CommentService;
-import is.hi.hbv501g.team20.taeknilaesi.service.CourseService;
-import is.hi.hbv501g.team20.taeknilaesi.service.LessonService;
-import is.hi.hbv501g.team20.taeknilaesi.service.ProgressService;
-import is.hi.hbv501g.team20.taeknilaesi.service.UserService;
 
 @Controller
 public class CourseController {
@@ -67,18 +64,29 @@ public class CourseController {
 
         //Initialize-a Progress listann
         List<Progress> p = new ArrayList<>();
+        HashMap<Integer, Double> gradeSet = new HashMap<>();
         //Ef user er skráður inn, sækjum í gagnagrunn
         if(!username.equals("anonymousUser")){
             //User user = uc.findUserByUsername(username);
             List<Progress> temp = ps.findAllByUserId(user.getId());
             p = temp;
+            gradeSet = ps.findQuizGrades(user);
         }
         else{
             //Sækjum progress listann úr storage ef hann er ekki tómur og yfirskrifum
-            if((List<Progress>)session.getAttribute("progress")!=null)
-                p = (List<Progress>)session.getAttribute("progress");
+            if((List<Progress>)session.getAttribute("progress")!=null) {
+                p = (List<Progress>) session.getAttribute("progress");
+                gradeSet = ps.findProgressForUnregistered(p);
+            }
         }
         session.setAttribute("progress", p);
+
+        if (p!=null && gradeSet!=null){
+            Double gradesSize = Double.valueOf(gradeSet.size());
+            Double coursesSize = Double.valueOf(coursesList.size());
+            int progressPercentage = (int)((gradesSize/coursesSize)*100);
+            session.setAttribute("progressPercentage", progressPercentage);
+        }
 
         return "courses";
     }

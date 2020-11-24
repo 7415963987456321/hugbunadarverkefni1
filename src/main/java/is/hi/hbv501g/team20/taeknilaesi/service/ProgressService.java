@@ -76,6 +76,7 @@ public class ProgressService {
         return highestGrade;
     }
 
+    // Skilar hashmap með key sem courseid og value sem hæsta einkunn fyrir quiz
     public HashMap<Integer, Double> findQuizGrades(User user) {
         Iterable<Progress> allProgress = progressRepository.findAll();
         HashMap<Integer, Double> gradeSet = new HashMap<>();
@@ -89,12 +90,20 @@ public class ProgressService {
                 gradeSet.put(tempCourse.getId(), findHighestGradeForCourse(tempCourse.getId(), user.getId()));
             }
         }
-
         return gradeSet;
+    }
 
+    // Skilar hashmap með key sem courseid og value sem 10.0, einungins til að finna progress fyrir óskráða usera
+    public HashMap<Integer, Double> findProgressForUnregistered(List<Progress> userProgress) {
+        HashMap<Integer, Double> gradeSet = new HashMap<>();
 
+        Iterable<Course> allCourses = courseRepository.findAll();
 
-
-
+        for(Course tempCourse : allCourses){
+            if (tempCourse.isCourseFinished(userProgress)){
+                gradeSet.put(tempCourse.getId(), 10.0);
+            }
+        }
+        return gradeSet;
     }
 }

@@ -14,18 +14,35 @@
 
 <div layout:fragment="content">
     <h1>Niðurstöður prófs</h1>
-    <div th:each="spurning : ${quizQuestions} ">
-        <h3 th:text="${spurning.question}"></h3>
-        <div th:each="res :${quizResult.answers}">
-            <div th:each="svar : ${spurning.answers}">
-                <h4 th:text="'Þitt svar er : ' + ${res.answer}" th:if="${svar.answer.equals(res.answer)}"></h4>
+    <div class="list-group" th:each="spurning : ${quizQuestions} ">
+        <div class="list-group-item">
+            <div th:if="${spurning.logo != null}" class="d-flex">
+                <i class="large material-icons" th:text="${spurning.logo}"></i>
+                <h3 th:text="${spurning.question}"></h3>
             </div>
+            <div th:unless="${spurning.logo != null}">
+                <h3 th:text="${spurning.question}"></h3>
+            </div>
+            <div th:each="res :${quizResult.answers}">
+                <div th:each="svar : ${spurning.answers}">
+                    <span th:if="${svar.answer.equals(res.answer)}">
+                    <div th:text="'Þitt svar var : ' + ${res.answer}" style="font-weight: bold"></div>
+
+                        <span th:if="${svar.answer.equals(spurning.rightAnswer)}" th:text="${'Það er rétt svar'}" style="color: green"></span>
+                        <span th:unless="${svar.answer.equals(spurning.rightAnswer)}" th:text="${'Það er rangt svar, rétt var: '+spurning.rightAnswer}" style="color: red"></span>
+
+
+
+                        </span>
+                </div>
+            </div>
+            <!--            <h4 th:text="'Rétt svar er :'+ ${spurning.rightAnswer}"></h4>-->
         </div>
-        <h4 th:text="'Rétt svar er :'+ ${spurning.rightAnswer}"></h4>
     </div>
-    <h2 th:text="'Einkunn þín er ' + ${quizGrade}"></h2>
-    <a href="/" class="btn btn-info ">Til baka á forsíðu</a>
-    <a th:href="@{/quiz/{id}(id = ${courseId})}" class="btn btn-warning">Endurtaka próf fyrir hærri einkunn</a>
+    <h2 th:text="'Einkunn þín er ' + ${quizGrade}" style="margin-top: 1rem; margin-left: 1rem;"></h2>
+    <a href="/" class="btn btn-info " style="margin-left: 1rem;">Til baka á forsíðu</a>
+    <a th:if="${quizGrade<10.0}" th:href="@{/quiz/{id}(id = ${courseId})}" class="btn btn-warning">Endurtaka próf fyrir hærri einkunn</a>
+    <a th:unless="${quizGrade<10.0}" th:href="@{/quiz/{id}(id = ${courseId})}" class="btn btn-warning">Þú getur tekið prófið aftur þér til gagns en ert komin með 10 í einkunn</a>
 </div>
 </body>
 </html>

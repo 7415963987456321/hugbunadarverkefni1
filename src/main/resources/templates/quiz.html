@@ -7,13 +7,18 @@
 </head>
 <body>
 <div layout:fragment="content">
+    <div class="card" style="padding-left: 1rem">
+        <h2 th:text="${'Próf úr námskeiðinu: '+courseName}"></h2>
+        <p>Mundu að hæsta einkunn gildir og þú getur reynt aftur og aftur</p>
+    </div>
     <form action="#" th:action="@{/quiz/{id}/finish(id = ${courseId})}" method="POST" th:object="${quizResult}">
-        <div th:each="question : ${questions}">
+        <Ul th:each="question : ${questions}" class="list-group">
+            <li class="list-group-item">
             <span th:if="${question.logo != null}" class="d-flex">
                 <i class="large material-icons" th:text="${question.logo}"></i>
-                <h2 th:text="${'  '+question.getQuestion()}"> Spurningin er</h2>
+                <h2 th:text="${'    '+question.getQuestion()}"> Spurningin er</h2>
             </span>
-            <span th:unless="${question.logo != null}">
+            <span th:unless="${question.logo != null}" class="d-flex">
                 <h2 th:text="${question.getQuestion()}"> Spurningin er</h2>
             </span>
             <input type="hidden" th:field="*{questions[__${questions.indexOf(question)}__]}">
@@ -21,8 +26,9 @@
                 <input th:type="radio" th:field="*{answers[__${questions.indexOf(question)}__]}" th:id="*{answers}"
                        th:value="${answer.getId()}" th:text="${' ' + answer}" required="required">
             </div>
-        </div>
-        <input type="submit" class="btn btn-success float-left" value="Klára quiz">
+            </li>
+        </Ul>
+        <input type="submit" class="btn btn-success float-left" value="Klára próf" style="margin-top: 1rem; margin-left: 1rem;">
     </form>
 </div>
 </body>

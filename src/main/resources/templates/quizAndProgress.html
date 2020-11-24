@@ -9,7 +9,7 @@
 <div layout:fragment="content">
 
     <div th:if="${progressPercentage!=0}" class="progress" style="height:2rem; margin-bottom: 1rem;">
-        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" th:style="'width:'+ ${progressPercentage}+'%;'" th:attr="aria-valuenow=${progressPercentage}"  aria-valuemin="0" aria-valuemax="100" th:text="${'Þú hefur lokið '+progressPercentage+'% af efninu'}"></div>
+        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" th:style="'width:'+ ${progressPercentage}+'%;'" th:attr="aria-valuenow=${progressPercentage}"  aria-valuemin="0" aria-valuemax="100" th:text="${'Þú hefur lokið '+progressPercentage+'% af námskeiðunum'}"></div>
     </div>
 
     <H2> Hér sérð þú hvaða námskeiðum þú hefur lokið ásamt hæstu einkunn fyrir próf úr þeim</H2>

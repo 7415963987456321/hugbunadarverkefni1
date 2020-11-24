@@ -299,7 +299,7 @@ class DemoCommandLineRunner implements CommandLineRunner {
         tempAnswer.add(new Answer("Ýta fast til að skjárinn nemi snertingu"));
         tempAnswer.add(new Answer("Nota marga putta"));
         tempAnswer.add(new Answer("Nota aðeins einn eða tvo putta og ýta laust"));
-        tempQuestion = new Question(tempQuestionString,tempAnswer, "Nota aðeins einn eða tvo putta og yta laust");
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Nota aðeins einn eða tvo putta og ýta laust");
 
         // Tengja svörin við spurninga
         for(Answer answer : tempAnswer){
@@ -361,7 +361,7 @@ class DemoCommandLineRunner implements CommandLineRunner {
         tempQuestionString = " Fyrir hvað stendur þetta merki?";
         tempAnswer = new HashSet<>();
         tempAnswer.add(new Answer("Stendur fyrir stillingar"));
-        tempAnswer.add(new Answer("Stendur fyrir þráðlaust internet"));
+        tempAnswer.add(new Answer("Stendur fyrir þráðlaust internet "));
         tempAnswer.add(new Answer("Stendur fyrir skeiðklukku"));
         tempQuestion = new Question(tempQuestionString,tempAnswer, "Stendur fyrir stillingar");
         tempQuestion.setLogo("settings");
@@ -518,7 +518,6 @@ class DemoCommandLineRunner implements CommandLineRunner {
         tempAnswer = new HashSet<>();
         tempAnswer.add(new Answer("Slegið er inn notendanafn og lykilorð"));
         tempAnswer.add(new Answer("Slegið er inn símanúmer og svo staðfest í síma með pin númeri"));
-        tempAnswer.add(new Answer("Slegið er inn símanúmer og svo staðfest í síma með pin númeri"));
         tempQuestion = new Question(tempQuestionString,tempAnswer, "Hvernig skráir maður sig inn með rafrænum skilríkjum");
 
 
@@ -572,9 +571,9 @@ class DemoCommandLineRunner implements CommandLineRunner {
         //////////////////////////////////////
         tempQuestionString = "Góð venja er að senda aldrei kreditkortanúmer í gegnum tölvupóst eða facebook einkaskilaboð";
         tempAnswer = new HashSet<>();
-        tempAnswer.add(new Answer("Satt"));
-        tempAnswer.add(new Answer("Ósatt"));
-        tempQuestion = new Question(tempQuestionString,tempAnswer, "Satt");
+        tempAnswer.add(new Answer("Satt "));
+        tempAnswer.add(new Answer("Ósatt "));
+        tempQuestion = new Question(tempQuestionString,tempAnswer, "Satt ");
 
 
         // Tengja svörin við spurninga

@@ -6,6 +6,10 @@
 </head>
 <body>
 <div layout:fragment="content">
+
+    <div class="card" th:if="${session.progressPercentage!=null || session.progressPercentage!=0.0}" style="height:2rem; margin-bottom: 1rem;">
+        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" th:style="'width:'+ ${session.progressPercentage}+'%;'" th:attr="aria-valuenow=${session.progressPercentage}"  aria-valuemin="0" aria-valuemax="100" th:text="${'Þú hefur lokið '+ session.progressPercentage+'% af námskeiðunum'}"></div>
+    </div>
     <div class="card" th:each="course : ${courses}" style="margin-bottom: 1rem">
         <h5 class="card-header" th:text="${course.title}"></h5>
         <div class="card-body">
