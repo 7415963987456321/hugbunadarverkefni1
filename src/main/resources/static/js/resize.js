@@ -1,32 +1,44 @@
 $(document).ready(function(){
          var curZoom;
+         var curFontSize = parseInt($('html').css('font-size').slice(0,-2));
          //check if cookie exists and if not set it
          if(!document.cookie.split(';').some(function(item) {
              return item.trim().indexOf('zoom=') == 0
      })) {
              curZoom = 1;
              document.cookie = "zoom="+curZoom+";path=/";
+             document.cookie = "font="+curFontSize+";path=/";
          } else {
+             
+             curZoom = getCookie('zoom');
+             curFontSize = parseInt(getCookie('font'));
 
-             var curZoom = getCookie('zoom');
              // console.log("zoom is there: " + document.cookie.indexOf('zoom='));
          }
-        setZoom(curZoom);
+    setZoom(curZoom, curFontSize);
      $('#increasetext').click(function() {
          curZoom *= 1.1;
-         setZoom(curZoom);
+         curFontSize += 2;
+         setZoom(curZoom,curFontSize);
+
      });
 
      $('#decreasetext').click(function() {
          curZoom *= 0.9;
-         setZoom(curZoom);
+         curFontSize -= 2;
+         setZoom(curZoom,curFontSize);
 
      });
-         function setZoom(zoom){
+    function setZoom(zoom,font){
              $('body').css('zoom', zoom);
-             $('body').css('MozTransform','scale(' + zoom + ')');
+             // $('body').css('MozTransform','scale(' + zoom + ')');
              document.cookie = "zoom="+curZoom+";path=/";
-             // console.log("zoom is now: " + curZoom)
+             if(navigator.userAgent.indexOf("Firefox") != -1 ){
+                 console.log(font);
+                 $('html').css('font-size',font);
+             }
+
+             document.cookie = "font="+curFontSize+";path=/";
          }
          function getCookie(name) {
              const value = `; ${document.cookie}`;

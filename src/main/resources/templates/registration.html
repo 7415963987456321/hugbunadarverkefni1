@@ -8,46 +8,55 @@
     <div layout:fragment="content">
         <div class="container">
             <h1>Stofna aðgang</h1>
-            <form id="userForm" th:action="@{/register}" th:object="${user}" action="#" method="post" class="form-horizontal">
+            <form id="userForm" th:action="@{/register}" th:object="${user}" action="#" method="post" >
                 <!-- <div th:if="${#fields.hasErrors('global')}" th:errors="*{global}" class="alert alert-danger">Lykilorð eru ekki eins</div> -->
-                <input type="hidden" th:field="*{id}" />
-                <!-- <input type="hidden" /> -->
-                <div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
-                    <label class="control-label col-xs-2" for="name">Nafn</label>
-                <div class="col-xs-10">
-                    <input id="name" type="text" title="name" th:field="*{name}" />
-                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="help-block">Email Error</span>
+
+                <div class="form-group col col-4" >
+                    <input type="hidden" th:field="*{id}" />
+                    <!-- <input type="hidden" /> -->
+                    <div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
+
+                        <!-- Name -->
+                        <label for="name">Nafn:</label>
+                        <div class="row">
+                            <input id="name" type="text" title="name" th:field="*{name}" />
+                            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="form-text text-danger"></span>
+                        </div>
+
+                        <!-- Year -->
+                        <label  for="year">Árgangur:</label>
+                        <div class="row">
+                            <input id="year" type="text" title="year" th:field="*{year}"  />
+                            <span th:if="${#fields.hasErrors('year')}" th:errors="*{year}" class="form-text text-danger"></span>
+                        </div>
+
+                        <!-- email -->
+                        <label for="email">Tölvupóstur:</label>
+                        <div class="row">
+                            <input id="email" type="email" title="email" th:field="*{email}" />
+                            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="form-text text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- password -->
+                    <label  for="password">Lykilorð:</label>
+                    <div class="row">
+                        <input id="password" type="password" title="password" th:field="*{password}" />
+                        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="form-text text-danger"></span>
+                    </div>
+
+                    <!-- password confirm -->
+                    <label  for="passwordConfirmation">Lykilorð staðfesting:</label>
+                    <div class="row">
+                        <input id="passwordConfirmation" type="password" title="passwordConfirmation" th:field="*{passwordConfirmation}" />
+                        <span th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}" class="form-text text-danger">Lykilorð Confirmation Error</span>
+                    </div>
+                        <div class="form-actions form-group">
+                            <input type="submit" class="btn btn-primary btn-block" value="Vista" />
+                        </div>
                 </div>
-                <label class="control-label col-xs-2" for="year">Árgangur</label>
-                <div class="col-xs-10">
-                    <input id="year" type="text" title="year" th:field="*{year}" placeholder="1935" />
-                    <span th:if="${#fields.hasErrors('year')}" th:errors="*{year}" class="help-block">Email Error</span>
-                </div>
-                <label class="control-label col-xs-2" for="email">Tölvupóstur</label>
-                <div class="col-xs-10">
-                    <input id="email" type="email" title="email" th:field="*{email}" />
-                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="help-block">Email error</span>
-                </div>
-                </div>
-                <div class="form-group" th:classappend="${#fields.hasErrors('password')} ? 'has-error'">
-                    <label class="control-label col-xs-2" for="password">Lykilorð</label>
-                <div class="col-xs-10">
-                    <input id="password" type="password" title="password" th:field="*{password}" />
-                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="help-block">Lykilorð Error</span>
-                </div>
-                </div>
-                <div class="form-group" th:classappend="${#fields.hasErrors('passwordConfirmation')} ? 'has-error'">
-                    <label class="control-label col-xs-2" for="passwordConfirmation">Lykilorð staðfesting</label>
-                <div class="col-xs-10">
-                    <input id="passwordConfirmation" type="password" title="passwordConfirmation" th:field="*{passwordConfirmation}" />
-                    <span th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}" class="help-block">Lykilorð Confirmation Error</span>
-                </div>
-                </div>
-                <div class="form-actions col-xs-offset-2 col-xs-10">
-                    <input type="submit" class="btn btn-primary" value="Register" />
-                </div>
-            </form>
         </div>
+            </form>
     </div>
 </body>
 </html>

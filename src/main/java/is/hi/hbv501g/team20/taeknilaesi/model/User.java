@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 
 
@@ -23,12 +24,14 @@ public class User
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @NotEmpty(message = "það vantar nafn.")
     private String name;
 
-    private int year;
+    @Pattern(regexp = "^(19|20)\\d{2}$", message = "Stimplaðu in árgang eins og t.d. 1940")
+    private String year;
 
-    @Email(message = "það vantar tölvupóst")
+    @NotEmpty(message = "það vantar tölvupóst")
     private String email;
 
     @NotEmpty(message = "það vantar lykilorð")
@@ -46,7 +49,7 @@ public class User
     public User(){
 
     }
-    public User(String name,int year, String email, String password){
+    public User(String name,String year, String email, String password){
         this.name = name;
         this.year = year;
         this.email = email;
@@ -72,10 +75,10 @@ public class User
     public void setName(String name) {
         this.name = name;
     }
-    public int getYear() {
+    public String getYear() {
         return year;
     }
-    public void setYear(int year) {
+    public void setYear(String year) {
         this.year = year;
     }
     public String getPassword() {
