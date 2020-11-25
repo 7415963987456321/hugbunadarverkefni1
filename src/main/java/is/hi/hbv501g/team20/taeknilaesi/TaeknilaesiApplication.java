@@ -155,7 +155,7 @@ class DemoCommandLineRunner implements CommandLineRunner {
         lr.save(l22);
         Lesson l23 = new Lesson(8, "Rafræn skilríki", "", "8._rafraen_skilriki.mp4", new ArrayList<>());
         lr.save(l23);
-        Lesson l24 = new Lesson(8, "I nnskráning", "", "8.1_rafraen_hvarog_hvernig.mp4", new ArrayList<>());
+        Lesson l24 = new Lesson(8, "Innskráning", "", "8.1_rafraen_hvarog_hvernig.mp4", new ArrayList<>());
         lr.save(l24);
         Lesson l25 = new Lesson(8, "Hvar og hvernig", "", "8.2_rafraen_inskraning.mp4", new ArrayList<>());
         lr .save(l25);
@@ -202,14 +202,14 @@ class DemoCommandLineRunner implements CommandLineRunner {
         tmpLessons.add(l23);
         tmpLessons.add(l24);
         tmpLessons.add(l25);
-        Course c3 = new Course(8, "Rafræn skilríki", "", tmpLessons);
+        Course c3 = new Course(8, "Rafræn skilríki", "Rafræn skilriki eru eins konar auðkenning og sameiginlegt innskraningakerfi fyrir margar þjonustur a islandi.", tmpLessons);
         cr.save(c3);
 
         tmpLessons.clear();
         tmpLessons.add(l26);
         tmpLessons.add(l27);
         tmpLessons.add(l28);
-        Course c4 = new Course(9, "Öryggi og nethegðun", "", tmpLessons);
+        Course c4 = new Course(9, "Öryggi og nethegðun", "Nokkur ráð og ábendingar varðandi netöryggi og nethegðun", tmpLessons);
         cr.save(c4);
 
         /////////////// Comments always crash????
