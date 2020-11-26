@@ -99,18 +99,18 @@ class DemoCommandLineRunner implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
+        ////////////////////////////////////////////
+        //below needs to be commented to run on mysql
+        ////////////////////////////////////////////
 
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(10, new SecureRandom());
         String encodedPassword1 = bCryptPasswordEncoder.encode("1234");
         String encodedPassword2 = bCryptPasswordEncoder.encode("qwerty");
         User u1 = new User("unnur", "1940", "unnur@gmail.com", encodedPassword1);
-        //  sr.save(new User("unnur", 1935, "unnur@gmail.com",encodedPassword1));
         sr.save(u1);
         User u2 = new User("jon", "1939", "jon@gmail.com", encodedPassword2);
-        // sr.save(new User("jon", 1935, "jon@gmail.com",encodedPassword2)) ;
         sr.save(u2);
 
-        // List<Comment> new ArrayList<>()sdf = new ArrayList<>();
         Lesson l1 = new Lesson(1,"Hvað er spjaldtölva","Hvernig virkar spjaldtölva og hvernig stjórnar maður henni.","1.1_Hvad_er_spjaldtolva.mp4",new ArrayList<>());
         lr.save(l1);
         Lesson l2 = new Lesson(1, "Hækka og lækka", "", "1.2.2_Haekka_og_laekka.mp4", new ArrayList<>());
@@ -211,14 +211,6 @@ class DemoCommandLineRunner implements CommandLineRunner {
         tmpLessons.add(l28);
         Course c4 = new Course(9, "Öryggi og nethegðun", "Nokkur ráð og ábendingar varðandi netöryggi og nethegðun", tmpLessons);
         cr.save(c4);
-
-        /////////////// Comments always crash????
-        // Comment cm1 = new Comment(1, "blablabla", u1.getName());
-        // cmr.save(cm1);
-        // Comment cm2 = new Comment(1, "meira blablabla", u2.getName());
-        // cmr.save(cm2);
-        // Comment cm3 = new Comment(2, "blablabla", u1.getName());
-        // cmr.save(cm3);
 
 
         Set<Lesson> tmp2Lessons = new HashSet<>();
