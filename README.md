@@ -23,7 +23,7 @@ To run the project extract the zip file or alternatively
 
 then enter the root directory of the project
 
-```cd hugbunadarverkefni1```
+```cd hugbunadarverkefni1-master```
 
 and run the application by executing the following Maven command
 
@@ -44,4 +44,4 @@ To change to mysql backend, you need to comment the data initialization in `Demo
 
 and in `application.properties` two configuration blocks need to be switched, that is commented and uncommented.
 
-Beware though, we have had errors running the application with `too many connections errros`.
+Beware though, we have had errors running the application with `too many connections errrors`.
